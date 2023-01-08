@@ -6,4 +6,10 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>microservice-search</name>
+
+  <modules>
+    <module>search-gateway</module>
+    <module>stock-service</module>
+    <module>cms-service</module>
+  </modules>
 </project>
