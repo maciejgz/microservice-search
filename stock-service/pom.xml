@@ -54,6 +54,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <imageName>ms-stock-service</imageName>
                 </configuration>
             </plugin>
         </plugins>

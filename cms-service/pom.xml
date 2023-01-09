@@ -54,6 +54,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <imageName>ms-cms-service</imageName>
                 </configuration>
             </plugin>
         </plugins>
