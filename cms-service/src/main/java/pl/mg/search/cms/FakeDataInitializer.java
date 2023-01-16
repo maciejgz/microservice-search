@@ -1,6 +1,6 @@
 package pl.mg.search.cms;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class FakeDataInitializer {
         Faker faker = new Faker();
         if (repo.count() == 0) {
             for (int i = 0; i < 30000; i++) {
-                repo.save(new CmsProduct(faker.number().randomNumber(), faker.book().title(),
+                repo.save(new CmsProduct(i + 1, i + 1, faker.book().title(),
                         faker.elderScrolls().quote()));
             }
         }
