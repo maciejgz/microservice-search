@@ -1,4 +1,4 @@
-package pl.mg.search.cms.domain;
+package pl.mg.search.stock.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "cms_product")
-@Data
-@NoArgsConstructor
+@Table(name = "stock_product")
 @AllArgsConstructor
-public class CmsProduct {
+@NoArgsConstructor
+@Data
+public class StockProduct {
 
     @Id
     private long id;
@@ -21,9 +23,7 @@ public class CmsProduct {
     @Column(name = "stock_product_id")
     private long stockProductId;
 
-    private String title;
+    private BigDecimal price;
 
-    @Column(name = "description", length = 5000)
-    private String description;
-
+    private String category;
 }
