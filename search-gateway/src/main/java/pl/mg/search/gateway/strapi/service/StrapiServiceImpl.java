@@ -1,5 +1,6 @@
 package pl.mg.search.gateway.strapi.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.ICSVWriter;
 import com.opencsv.bean.CsvToBean;
@@ -16,15 +17,25 @@ import pl.mg.search.gateway.strapi.command.GenerateCsvCommand;
 import pl.mg.search.gateway.strapi.command.GenerateImageCommand;
 import pl.mg.search.gateway.strapi.command.ImportProductsCommand;
 import pl.mg.search.gateway.strapi.model.CatalogEntry;
+import pl.mg.search.gateway.strapi.model.ProductCmsData;
+import pl.mg.search.gateway.strapi.model.ProductCmsModel;
 import pl.mg.search.gateway.strapi.model.ProductEntry;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +95,7 @@ public class StrapiServiceImpl implements StrapiService {
 
     @Override
     public void importProducts(ImportProductsCommand command) {
-        List<ProductEntry> products = new ArrayList<>();
+        List<ProductEntry> products;
         Path myPath = Path.of(command.getCsvFilePath());
         try (BufferedReader br = Files.newBufferedReader(myPath,
                 StandardCharsets.UTF_8)) {
@@ -104,7 +115,35 @@ public class StrapiServiceImpl implements StrapiService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //TODO implement import
+
+        HttpClient client = HttpClient.newBuilder().build();
+
+        for (ProductEntry product : products) {
+            try {
+
+                ProductCmsModel cmsModel = ProductCmsModel.builder()
+                        .title(product.getNameDe())
+                        .description(product.getDescriptionDe())
+                        .productCode(product.getCode())
+                        .region(new String[]{"germany"})
+                        .build();
+                ProductCmsData data = new ProductCmsData(cmsModel);
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(new URI("http://localhost:1337/api/products"))
+                        .headers("Content-Type", "application/json")
+                        .header("Authorization",
+                                "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1")
+                        .POST(BodyPublishers.ofString((new ObjectMapper()).writeValueAsString(
+                                data
+                        )))
+                        .build();
+
+                HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
+//                log.debug(Instant.now() + " " + res.body());
+            } catch (URISyntaxException | IOException | InterruptedException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
     }
 
     private List<CatalogEntry> listCsvEntries(String catalogCsvPath) {
