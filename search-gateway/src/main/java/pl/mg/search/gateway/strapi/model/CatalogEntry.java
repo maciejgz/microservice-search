@@ -1,4 +1,4 @@
-package pl.mg.search.gateway.strapi;
+package pl.mg.search.gateway.strapi.model;
 
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package pl.mg.search.gateway.strapi;
+package pl.mg.search.gateway.strapi.command;
 
 import lombok.Data;
 
