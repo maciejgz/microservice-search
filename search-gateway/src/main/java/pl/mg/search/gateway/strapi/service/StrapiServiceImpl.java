@@ -20,6 +20,7 @@ import pl.mg.search.gateway.strapi.command.ImportProductsCommand;
 import pl.mg.search.gateway.strapi.model.CatalogEntry;
 import pl.mg.search.gateway.strapi.model.Image;
 import pl.mg.search.gateway.strapi.model.ProductCmsData;
+import pl.mg.search.gateway.strapi.model.ProductCmsLocalization;
 import pl.mg.search.gateway.strapi.model.ProductCmsModel;
 import pl.mg.search.gateway.strapi.model.ProductEntry;
 
@@ -51,7 +52,7 @@ public class StrapiServiceImpl implements StrapiService {
 
     @Override
     public void generateImages(GenerateImageCommand command) {
-        List<CatalogEntry> catalogEntries = listCsvEntries(command.getCsvFilePath());
+        List<CatalogEntry> catalogEntries = listCsvCatalogEntries(command.getCsvFilePath());
         catalogEntries.forEach(catalogEntry -> log.debug(catalogEntry.toString()));
 
         Path imagePath = Path.of(command.getImageFilePath());
@@ -74,28 +75,31 @@ public class StrapiServiceImpl implements StrapiService {
     }
 
     @Override
-    public void generateCsv(GenerateCsvCommand command) {
-        List<CatalogEntry> catalogEntries = listCsvEntries(command.getCsvFilePath());
+    public void generateCsvToImport(GenerateCsvCommand command) {
+        List<CatalogEntry> catalogEntries = listCsvCatalogEntries(command.getCsvFilePath());
         catalogEntries.forEach(catalogEntry -> log.debug(catalogEntry.toString()));
         List<ProductEntry> entries = catalogEntries.stream()
                 .map(catalogEntry ->
                         ProductEntry.builder()
                                 .code(catalogEntry.getCode())
-                                .images(findImages(catalogEntry.getCode()))
+                                .images(catalogEntry.getCode() + "-1.jpg," + catalogEntry.getCode() + "-2.jpg,"
+                                        + catalogEntry.getCode() + "-3.jpg")
                                 .nameDe(catalogEntry.getName())
                                 .descriptionDe(catalogEntry.getDescription())
+                                .slugDe(catalogEntry.getName().toLowerCase().replace(" ", "-"))
                                 .namePl("PL " + catalogEntry.getName())
                                 .descriptionPl("PL " + catalogEntry.getDescription())
+                                .slugPl(catalogEntry.getName().toLowerCase().replace(" ", "-"))
+                                .region(new String[]{"germany"})
                                 .build()
                 ).toList();
-
         try {
-            Files.deleteIfExists(Path.of(RESULT_DIRECTORY + "bs_csv_to_import.csv"));
+            Files.deleteIfExists(Path.of(RESULT_DIRECTORY + "bs_products_cms_import_small.csv"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try (FileWriter writer = new FileWriter(
-                Path.of(RESULT_DIRECTORY + "bs_csv_to_import.csv").toFile())) {
+                Path.of(RESULT_DIRECTORY + "bs_products_cms_import_small.csv").toFile())) {
             StatefulBeanToCsv<ProductEntry> sbc = new StatefulBeanToCsvBuilder<ProductEntry>(writer)
                     .withQuotechar('\"')
                     .withSeparator(ICSVWriter.DEFAULT_SEPARATOR)
@@ -130,7 +134,7 @@ public class StrapiServiceImpl implements StrapiService {
                     .GET()
                     .build();
             HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
-            String regex = "\"id\":.?(\\d+),";
+            String regex = ".*\"id\": ?(\\d+),.*";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(res.body());
             if (matcher.matches()) {
@@ -173,13 +177,17 @@ public class StrapiServiceImpl implements StrapiService {
                         .title(product.getNameDe())
                         .description(product.getDescriptionDe())
                         .productCode(product.getCode())
+                        .slug(product.getSlugDe())
                         .region(new String[]{"germany"})
                         .build();
                 if (StringUtils.isNotBlank(product.getImages())) {
                     String[] split = product.getImages().split(",");
                     Image[] reee = new Image[split.length];
                     for (int i = 0; i < split.length; i++) {
-                        reee[i] = new Image(Integer.parseInt(split[i]));
+                        Optional<String> image = findImageId(split[i]);
+                        if (image.isPresent()) {
+                            reee[i] = new Image(Integer.parseInt(image.get()));
+                        }
                     }
                     cmsModel.setImages(reee);
                 }
@@ -195,13 +203,38 @@ public class StrapiServiceImpl implements StrapiService {
                         .build();
 
                 HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
+
+                log.debug(res.body());
+                //get ID of created product
+                String regex = ".*\"id\": ?(\\d+),.*";
+                Pattern pattern = Pattern.compile(regex);
+                Matcher matcher = pattern.matcher(res.body());
+                if (matcher.matches()) {
+                    String id = matcher.group(1);
+                    ProductCmsLocalization localizationData = new ProductCmsLocalization();
+                    localizationData.setLocale("pl");
+                    localizationData.setSlug(product.getSlugPl());
+                    localizationData.setTitle(product.getNamePl());
+                    localizationData.setDescription(product.getDescriptionPl());
+                    HttpRequest localizationRequest = HttpRequest.newBuilder()
+                            .uri(new URI("http://localhost:1337/api/products/" + id + "/localizations"))
+                            .headers("Content-Type", "application/json")
+                            .header("Authorization",
+                                    "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1")
+                            .POST(BodyPublishers.ofString((new ObjectMapper()).writeValueAsString(
+                                    localizationData
+                            )))
+                            .build();
+
+                    HttpResponse<String> resLocale = client.send(localizationRequest, BodyHandlers.ofString());
+                }
             } catch (URISyntaxException | IOException | InterruptedException e) {
                 log.error(e.getMessage(), e);
             }
         }
     }
 
-    private List<CatalogEntry> listCsvEntries(String catalogCsvPath) {
+    private List<CatalogEntry> listCsvCatalogEntries(String catalogCsvPath) {
         List<CatalogEntry> ls = new ArrayList<>();
 
         try (Reader reader = Files.newBufferedReader(Path.of(catalogCsvPath))) {

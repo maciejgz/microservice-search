@@ -38,7 +38,7 @@ public class StrapiImportController {
     @PostMapping(value = "/generateCsv", name = "generateCsv")
     public ResponseEntity<Void> generateCsv(@RequestBody GenerateCsvCommand command) {
         log.debug("generateCsv");
-        strapiService.generateCsv(command);
+        strapiService.generateCsvToImport(command);
         return ResponseEntity.ok().build();
     }
 

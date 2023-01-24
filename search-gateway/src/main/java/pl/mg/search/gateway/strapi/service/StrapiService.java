@@ -8,7 +8,7 @@ public interface StrapiService {
 
     void generateImages(GenerateImageCommand command);
 
-    void generateCsv(GenerateCsvCommand command);
+    void generateCsvToImport(GenerateCsvCommand command);
 
     void importProducts(ImportProductsCommand command);
 }
