@@ -2,6 +2,7 @@ package pl.mg.search.gateway.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,13 @@ public class StrapiImportController {
     public ResponseEntity<Void> importProducts(@RequestBody ImportProductsCommand command) {
         log.debug("importProducts");
         strapiService.importProducts(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(value = "/products", name = "deleteProducts")
+    public ResponseEntity<Void> deleteProducts() {
+        log.debug("deleteProducts");
+        strapiService.deleteProducts();
         return ResponseEntity.ok().build();
     }
 

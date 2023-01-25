@@ -16,14 +16,14 @@ public class ProductEntry {
     private String code;
     @CsvBindByName(column = "images")
     private String images;
-    @CsvBindByName(column = "name_de")
-    private String nameDe;
+    @CsvBindByName(column = "title_de")
+    private String titleDe;
     @CsvBindByName(column = "description_de")
     private String descriptionDe;
     @CsvBindByName(column = "slug_de")
     private String slugDe;
-    @CsvBindByName(column = "name_pl")
-    private String namePl;
+    @CsvBindByName(column = "title_pl")
+    private String titlePl;
     @CsvBindByName(column = "description_pl")
     private String descriptionPl;
     @CsvBindByName(column = "slug_pl")

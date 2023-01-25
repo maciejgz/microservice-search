@@ -11,4 +11,6 @@ public interface StrapiService {
     void generateCsvToImport(GenerateCsvCommand command);
 
     void importProducts(ImportProductsCommand command);
+
+    void deleteProducts();
 }

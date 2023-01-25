@@ -84,10 +84,10 @@ public class StrapiServiceImpl implements StrapiService {
                                 .code(catalogEntry.getCode())
                                 .images(catalogEntry.getCode() + "-1.jpg," + catalogEntry.getCode() + "-2.jpg,"
                                         + catalogEntry.getCode() + "-3.jpg")
-                                .nameDe(catalogEntry.getName())
+                                .titleDe(catalogEntry.getName())
                                 .descriptionDe(catalogEntry.getDescription())
                                 .slugDe(catalogEntry.getName().toLowerCase().replace(" ", "-"))
-                                .namePl("PL " + catalogEntry.getName())
+                                .titlePl("PL " + catalogEntry.getName())
                                 .descriptionPl("PL " + catalogEntry.getDescription())
                                 .slugPl(catalogEntry.getName().toLowerCase().replace(" ", "-"))
                                 .region(new String[]{"germany"})
@@ -174,7 +174,7 @@ public class StrapiServiceImpl implements StrapiService {
         for (ProductEntry product : products) {
             try {
                 ProductCmsModel cmsModel = ProductCmsModel.builder()
-                        .title(product.getNameDe())
+                        .title(product.getTitleDe())
                         .description(product.getDescriptionDe())
                         .productCode(product.getCode())
                         .slug(product.getSlugDe())
@@ -214,7 +214,7 @@ public class StrapiServiceImpl implements StrapiService {
                     ProductCmsLocalization localizationData = new ProductCmsLocalization();
                     localizationData.setLocale("pl");
                     localizationData.setSlug(product.getSlugPl());
-                    localizationData.setTitle(product.getNamePl());
+                    localizationData.setTitle(product.getTitlePl());
                     localizationData.setDescription(product.getDescriptionPl());
                     HttpRequest localizationRequest = HttpRequest.newBuilder()
                             .uri(new URI("http://localhost:1337/api/products/" + id + "/localizations"))
@@ -232,6 +232,11 @@ public class StrapiServiceImpl implements StrapiService {
                 log.error(e.getMessage(), e);
             }
         }
+    }
+
+    @Override
+    public void deleteProducts() {
+        //TODO implement
     }
 
     private List<CatalogEntry> listCsvCatalogEntries(String catalogCsvPath) {
