@@ -216,6 +216,17 @@ public class StrapiServiceImpl implements StrapiService {
                     localizationData.setSlug(product.getSlugPl());
                     localizationData.setTitle(product.getTitlePl());
                     localizationData.setDescription(product.getDescriptionPl());
+                    if (StringUtils.isNotBlank(product.getImages())) {
+                        String[] split = product.getImages().split(",");
+                        Image[] reee2 = new Image[split.length];
+                        for (int i = 0; i < split.length; i++) {
+                            Optional<String> image = findImageId(split[i]);
+                            if (image.isPresent()) {
+                                reee2[i] = new Image(Integer.parseInt(image.get()));
+                            }
+                        }
+                        localizationData.setImages(reee2);
+                    }
                     HttpRequest localizationRequest = HttpRequest.newBuilder()
                             .uri(new URI("http://localhost:1337/api/products/" + id + "/localizations"))
                             .headers("Content-Type", "application/json")

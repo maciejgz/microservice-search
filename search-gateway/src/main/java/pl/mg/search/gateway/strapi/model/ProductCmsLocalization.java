@@ -8,4 +8,6 @@ public class ProductCmsLocalization {
     private String description;
     private String slug;
     private String locale;
+
+    private Image[] images;
 }
