@@ -1,0 +1,564 @@
+{
+    "data": [
+        {
+            "id": 1097,
+            "attributes": {
+                "title": "Miniaturka męskiej wody perfumowanej Spartan",
+                "productCode": "ML030",
+                "description": "<h4><big>Informacje</big><strong></strong><strong></strong><br /><strong></strong></h4><p>Zapach dla współczesnego wojownika, który stawia czoła różnym wyzwaniom. Męski i zdecydowany, intryguje oryginalnymi nutami. Rozgrzewający imbir i tajemnicze kadzidło nadają mu moc, a grejpfrut i cytryna orzeźwiają cytrusowym aromatem. Jaśmin i różowy pieprz rozpalają zmysły.<br /><br /><strong>Nuta głowy</strong><br />kadzidło, gałka muszkatołowa, grejpfrut, cytryna<br /><br /><strong>Nuta serca</strong><br />drzewo sandałowe, bursztyn, różowy pieprz<br /><br /><strong>Nuta bazy</strong><br />jaśmin, imbir, paczuli<strong><br /></strong></p><div class=\"page-break\"><!-- pagebreak --></div><h4>Przeznaczenie</h4><p>Dla mężczyzn</p><div class=\"page-break\"><!-- pagebreak --></div><h4>Opakowanie</h4><p>Pojemność 1 ml</p><div class=\"page-break\"><!-- pagebreak --></div>",
+                "region": [
+                    "germany"
+                ],
+                "createdAt": "2023-01-25T13:19:00.723Z",
+                "updatedAt": "2023-01-25T13:19:00.898Z",
+                "locale": "de",
+                "slug": "miniaturka-męskiej-wody-perfumowanej-spartan",
+                "images": {
+                    "data": [
+                        {
+                            "id": 7138,
+                            "attributes": {
+                                "name": "ML030-1.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_ML_030_1_28a926521a.jpg",
+                                        "hash": "small_ML_030_1_28a926521a",
+                                        "mime": "image/jpeg",
+                                        "name": "small_ML030-1.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_ML_030_1_28a926521a.jpg",
+                                        "hash": "medium_ML_030_1_28a926521a",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_ML030-1.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_ML_030_1_28a926521a.jpg",
+                                        "hash": "thumbnail_ML_030_1_28a926521a",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_ML030-1.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "ML_030_1_28a926521a",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/ML_030_1_28a926521a.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:15.028Z",
+                                "updatedAt": "2023-01-25T13:04:15.028Z"
+                            }
+                        },
+                        {
+                            "id": 7141,
+                            "attributes": {
+                                "name": "ML030-2.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_ML_030_2_5a8fc1d780.jpg",
+                                        "hash": "small_ML_030_2_5a8fc1d780",
+                                        "mime": "image/jpeg",
+                                        "name": "small_ML030-2.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_ML_030_2_5a8fc1d780.jpg",
+                                        "hash": "medium_ML_030_2_5a8fc1d780",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_ML030-2.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_ML_030_2_5a8fc1d780.jpg",
+                                        "hash": "thumbnail_ML_030_2_5a8fc1d780",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_ML030-2.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "ML_030_2_5a8fc1d780",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/ML_030_2_5a8fc1d780.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:15.241Z",
+                                "updatedAt": "2023-01-25T13:04:15.241Z"
+                            }
+                        },
+                        {
+                            "id": 7140,
+                            "attributes": {
+                                "name": "ML030-3.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_ML_030_3_d8356c273f.jpg",
+                                        "hash": "small_ML_030_3_d8356c273f",
+                                        "mime": "image/jpeg",
+                                        "name": "small_ML030-3.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_ML_030_3_d8356c273f.jpg",
+                                        "hash": "medium_ML_030_3_d8356c273f",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_ML030-3.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_ML_030_3_d8356c273f.jpg",
+                                        "hash": "thumbnail_ML_030_3_d8356c273f",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_ML030-3.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "ML_030_3_d8356c273f",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/ML_030_3_d8356c273f.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:15.214Z",
+                                "updatedAt": "2023-01-25T13:04:15.214Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 1101,
+            "attributes": {
+                "title": "Miniaturka wody perfumowanej La Rosita",
+                "productCode": "ML032",
+                "description": "<h4><big>Informacje</big><strong></strong><strong></strong><br /><strong></strong></h4><p>Upajająca woń kwiatów, wśród których króluje namiętna róża. Idealna kompozycja dla kobiet, które kochają uwodzicielskie zapachy na szlachetnym, wytwornym tle.  <br /><br />Kategoria zapachu: kwiatowa<br />Nuty głowy: piwonia, frezja, liczi<br />Nuty serca: magnolia, róża, konwalia<br />Nuty bazy: ambra, drewno cedrowe<strong><br /></strong></p><div class=\"page-break\"><!-- pagebreak --></div><h4>Przeznaczenie</h4><p>Dla kobiet</p><div class=\"page-break\"><!-- pagebreak --></div><h4>Opakowanie</h4><p>Pojemność 1 ml</p><div class=\"page-break\"><!-- pagebreak --></div>",
+                "region": [
+                    "germany"
+                ],
+                "createdAt": "2023-01-25T13:19:01.384Z",
+                "updatedAt": "2023-01-25T13:19:01.561Z",
+                "locale": "de",
+                "slug": "miniaturka-wody-perfumowanej-la-rosita",
+                "images": {
+                    "data": [
+                        {
+                            "id": 7144,
+                            "attributes": {
+                                "name": "ML032-1.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_ML_032_1_f0f1c0a915.jpg",
+                                        "hash": "small_ML_032_1_f0f1c0a915",
+                                        "mime": "image/jpeg",
+                                        "name": "small_ML032-1.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_ML_032_1_f0f1c0a915.jpg",
+                                        "hash": "medium_ML_032_1_f0f1c0a915",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_ML032-1.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_ML_032_1_f0f1c0a915.jpg",
+                                        "hash": "thumbnail_ML_032_1_f0f1c0a915",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_ML032-1.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "ML_032_1_f0f1c0a915",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/ML_032_1_f0f1c0a915.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:15.614Z",
+                                "updatedAt": "2023-01-25T13:04:15.614Z"
+                            }
+                        },
+                        {
+                            "id": 7145,
+                            "attributes": {
+                                "name": "ML032-2.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_ML_032_2_557227d3e5.jpg",
+                                        "hash": "small_ML_032_2_557227d3e5",
+                                        "mime": "image/jpeg",
+                                        "name": "small_ML032-2.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_ML_032_2_557227d3e5.jpg",
+                                        "hash": "medium_ML_032_2_557227d3e5",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_ML032-2.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_ML_032_2_557227d3e5.jpg",
+                                        "hash": "thumbnail_ML_032_2_557227d3e5",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_ML032-2.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "ML_032_2_557227d3e5",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/ML_032_2_557227d3e5.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:15.695Z",
+                                "updatedAt": "2023-01-25T13:04:15.695Z"
+                            }
+                        },
+                        {
+                            "id": 7146,
+                            "attributes": {
+                                "name": "ML032-3.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_ML_032_3_5957c2eed1.jpg",
+                                        "hash": "small_ML_032_3_5957c2eed1",
+                                        "mime": "image/jpeg",
+                                        "name": "small_ML032-3.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_ML_032_3_5957c2eed1.jpg",
+                                        "hash": "medium_ML_032_3_5957c2eed1",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_ML032-3.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_ML_032_3_5957c2eed1.jpg",
+                                        "hash": "thumbnail_ML_032_3_5957c2eed1",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_ML032-3.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "ML_032_3_5957c2eed1",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/ML_032_3_5957c2eed1.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:15.697Z",
+                                "updatedAt": "2023-01-25T13:04:15.697Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 1075,
+            "attributes": {
+                "title": "Łatwy start krok 3",
+                "productCode": "404",
+                "description": "",
+                "region": [
+                    "germany"
+                ],
+                "createdAt": "2023-01-25T13:18:57.048Z",
+                "updatedAt": "2023-01-25T13:18:57.264Z",
+                "locale": "de",
+                "slug": "łatwy-start-krok-3",
+                "images": {
+                    "data": [
+                        {
+                            "id": 7087,
+                            "attributes": {
+                                "name": "0404-1.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_0404_1_b9e1dcc31b.jpg",
+                                        "hash": "small_0404_1_b9e1dcc31b",
+                                        "mime": "image/jpeg",
+                                        "name": "small_0404-1.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_0404_1_b9e1dcc31b.jpg",
+                                        "hash": "medium_0404_1_b9e1dcc31b",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_0404-1.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_0404_1_b9e1dcc31b.jpg",
+                                        "hash": "thumbnail_0404_1_b9e1dcc31b",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_0404-1.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "0404_1_b9e1dcc31b",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/0404_1_b9e1dcc31b.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:09.099Z",
+                                "updatedAt": "2023-01-25T13:04:09.099Z"
+                            }
+                        },
+                        {
+                            "id": 7084,
+                            "attributes": {
+                                "name": "0404-2.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_0404_2_d33a505d1e.jpg",
+                                        "hash": "small_0404_2_d33a505d1e",
+                                        "mime": "image/jpeg",
+                                        "name": "small_0404-2.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_0404_2_d33a505d1e.jpg",
+                                        "hash": "medium_0404_2_d33a505d1e",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_0404-2.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_0404_2_d33a505d1e.jpg",
+                                        "hash": "thumbnail_0404_2_d33a505d1e",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_0404-2.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "0404_2_d33a505d1e",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/0404_2_d33a505d1e.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:08.996Z",
+                                "updatedAt": "2023-01-25T13:04:08.996Z"
+                            }
+                        },
+                        {
+                            "id": 7089,
+                            "attributes": {
+                                "name": "0404-3.jpg",
+                                "alternativeText": null,
+                                "caption": null,
+                                "width": 800,
+                                "height": 600,
+                                "formats": {
+                                    "small": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/small_0404_3_4a35f2bcf9.jpg",
+                                        "hash": "small_0404_3_4a35f2bcf9",
+                                        "mime": "image/jpeg",
+                                        "name": "small_0404-3.jpg",
+                                        "path": null,
+                                        "size": 53.65,
+                                        "width": 500,
+                                        "height": 375
+                                    },
+                                    "medium": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/medium_0404_3_4a35f2bcf9.jpg",
+                                        "hash": "medium_0404_3_4a35f2bcf9",
+                                        "mime": "image/jpeg",
+                                        "name": "medium_0404-3.jpg",
+                                        "path": null,
+                                        "size": 98.73,
+                                        "width": 750,
+                                        "height": 563
+                                    },
+                                    "thumbnail": {
+                                        "ext": ".jpg",
+                                        "url": "/uploads/thumbnail_0404_3_4a35f2bcf9.jpg",
+                                        "hash": "thumbnail_0404_3_4a35f2bcf9",
+                                        "mime": "image/jpeg",
+                                        "name": "thumbnail_0404-3.jpg",
+                                        "path": null,
+                                        "size": 12.59,
+                                        "width": 208,
+                                        "height": 156
+                                    }
+                                },
+                                "hash": "0404_3_4a35f2bcf9",
+                                "ext": ".jpg",
+                                "mime": "image/jpeg",
+                                "size": 107.83,
+                                "url": "/uploads/0404_3_4a35f2bcf9.jpg",
+                                "previewUrl": null,
+                                "provider": "local",
+                                "provider_metadata": null,
+                                "createdAt": "2023-01-25T13:04:09.131Z",
+                                "updatedAt": "2023-01-25T13:04:09.131Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 3
+        }
+    }
+}
