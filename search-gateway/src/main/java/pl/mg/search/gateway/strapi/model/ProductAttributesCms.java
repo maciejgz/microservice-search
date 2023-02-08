@@ -11,6 +11,8 @@ public class ProductAttributesCms {
 
     private String locale;
     private ImagesCms images;
+
+    private AdditionalFilesCms additionalFiles;
     private String[] region;
     private String slug;
 

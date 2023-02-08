@@ -10,4 +10,5 @@ public class ProductCmsLocalization {
     private String locale;
 
     private Image[] images;
+    private Image[] additionalFiles;
 }

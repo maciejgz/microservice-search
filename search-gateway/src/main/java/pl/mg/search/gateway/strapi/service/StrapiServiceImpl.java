@@ -38,8 +38,11 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +52,12 @@ import java.util.regex.Pattern;
 public class StrapiServiceImpl implements StrapiService {
 
     protected static final String RESULT_DIRECTORY = "C:\\Users\\maciej\\result\\";
+
+    //private final static String CMS_URL = "http://localhost:1337";
+    private final static String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
+
+    //header
+    protected static final String AUTHORIZATION_HEADER = "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1";
 
     @Override
     public void generateImages(GenerateImageCommand command) {
@@ -65,9 +74,12 @@ public class StrapiServiceImpl implements StrapiService {
                 Path result2 = Files.copy(imagePath, Path.of(RESULT_DIRECTORY + entry.getCode().trim() + "-2.jpg"));
                 Files.deleteIfExists(Path.of(RESULT_DIRECTORY + entry.getCode().trim() + "-3.jpg"));
                 Path result3 = Files.copy(imagePath, Path.of(RESULT_DIRECTORY + entry.getCode().trim() + "-3.jpg"));
+                Files.deleteIfExists(Path.of(RESULT_DIRECTORY + entry.getCode().trim() + "-add1.pdf"));
+                Path result4 = Files.copy(imagePath, Path.of(RESULT_DIRECTORY + entry.getCode().trim() + "-add1.pdf"));
                 log.debug("1: " + result1);
-                log.debug("1: " + result2);
-                log.debug("1: " + result3);
+                log.debug("2: " + result2);
+                log.debug("3: " + result3);
+                log.debug("4: " + result4);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -84,6 +96,7 @@ public class StrapiServiceImpl implements StrapiService {
                                 .code(catalogEntry.getCode())
                                 .images(catalogEntry.getCode() + "-1.jpg," + catalogEntry.getCode() + "-2.jpg,"
                                         + catalogEntry.getCode() + "-3.jpg")
+                                .additionalFiles(catalogEntry.getCode() + "-add1.pdf")
                                 .titleDe(catalogEntry.getName())
                                 .descriptionDe(catalogEntry.getDescription())
                                 .slugDe(catalogEntry.getName().toLowerCase().replace(" ", "-"))
@@ -128,9 +141,9 @@ public class StrapiServiceImpl implements StrapiService {
         try {
             HttpClient client = HttpClient.newBuilder().build();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://localhost:1337/api/upload/files?filters[name][$eq]=" + imageName))
+                    .uri(new URI(CMS_URL + "/api/upload/files?filters[name][$eq]=" + imageName))
                     .header("Authorization",
-                            "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1")
+                            AUTHORIZATION_HEADER)
                     .GET()
                     .build();
             HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
@@ -177,7 +190,7 @@ public class StrapiServiceImpl implements StrapiService {
                         .title(product.getTitleDe())
                         .description(product.getDescriptionDe())
                         .productCode(product.getCode())
-                        .slug(product.getSlugDe())
+                        .slug(toSlug(product.getSlugDe()))
                         .region(new String[]{"germany"})
                         .build();
                 if (StringUtils.isNotBlank(product.getImages())) {
@@ -191,12 +204,23 @@ public class StrapiServiceImpl implements StrapiService {
                     }
                     cmsModel.setImages(reee);
                 }
+                if (StringUtils.isNotBlank(product.getAdditionalFiles())) {
+                    String[] split = product.getAdditionalFiles().split(",");
+                    Image[] reee = new Image[split.length];
+                    for (int i = 0; i < split.length; i++) {
+                        Optional<String> image = findImageId(split[i]);
+                        if (image.isPresent()) {
+                            reee[i] = new Image(Integer.parseInt(image.get()));
+                        }
+                    }
+                    cmsModel.setAdditionalFiles(reee);
+                }
                 ProductCmsData data = new ProductCmsData(cmsModel);
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(new URI("http://localhost:1337/api/products"))
+                        .uri(new URI(CMS_URL + "/api/products"))
                         .headers("Content-Type", "application/json")
                         .header("Authorization",
-                                "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1")
+                                AUTHORIZATION_HEADER)
                         .POST(BodyPublishers.ofString((new ObjectMapper()).writeValueAsString(
                                 data
                         )))
@@ -213,7 +237,7 @@ public class StrapiServiceImpl implements StrapiService {
                     String id = matcher.group(1);
                     ProductCmsLocalization localizationData = new ProductCmsLocalization();
                     localizationData.setLocale("pl");
-                    localizationData.setSlug(product.getSlugPl());
+                    localizationData.setSlug(toSlug(product.getSlugPl()));
                     localizationData.setTitle(product.getTitlePl());
                     localizationData.setDescription(product.getDescriptionPl());
                     if (StringUtils.isNotBlank(product.getImages())) {
@@ -227,11 +251,23 @@ public class StrapiServiceImpl implements StrapiService {
                         }
                         localizationData.setImages(reee2);
                     }
+
+                    if (StringUtils.isNotBlank(product.getAdditionalFiles())) {
+                        String[] split = product.getAdditionalFiles().split(",");
+                        Image[] reee2 = new Image[split.length];
+                        for (int i = 0; i < split.length; i++) {
+                            Optional<String> image = findImageId(split[i]);
+                            if (image.isPresent()) {
+                                reee2[i] = new Image(Integer.parseInt(image.get()));
+                            }
+                        }
+                        localizationData.setAdditionalFiles(reee2);
+                    }
                     HttpRequest localizationRequest = HttpRequest.newBuilder()
-                            .uri(new URI("http://localhost:1337/api/products/" + id + "/localizations"))
+                            .uri(new URI(CMS_URL + "/api/products/" + id + "/localizations"))
                             .headers("Content-Type", "application/json")
                             .header("Authorization",
-                                    "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1")
+                                    AUTHORIZATION_HEADER)
                             .POST(BodyPublishers.ofString((new ObjectMapper()).writeValueAsString(
                                     localizationData
                             )))
@@ -243,6 +279,16 @@ public class StrapiServiceImpl implements StrapiService {
                 log.error(e.getMessage(), e);
             }
         }
+    }
+
+    private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
+    private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
+
+    public static String toSlug(String input) {
+        String nowhitespace = WHITESPACE.matcher(input).replaceAll("-");
+        String normalized = Normalizer.normalize(nowhitespace, Form.NFD);
+        String slug = NONLATIN.matcher(normalized).replaceAll("");
+        return slug.toLowerCase(Locale.ENGLISH);
     }
 
     @Override

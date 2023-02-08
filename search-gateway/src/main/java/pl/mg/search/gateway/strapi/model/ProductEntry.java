@@ -16,6 +16,8 @@ public class ProductEntry {
     private String code;
     @CsvBindByName(column = "images")
     private String images;
+    @CsvBindByName(column = "additionalFiles")
+    private String additionalFiles;
     @CsvBindByName(column = "title_de")
     private String titleDe;
     @CsvBindByName(column = "description_de")

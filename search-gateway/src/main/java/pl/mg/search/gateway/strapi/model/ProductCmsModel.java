@@ -13,4 +13,6 @@ public class ProductCmsModel {
     private String slug;
     private String[] region;
     private Image[] images;
+
+    private Image[] additionalFiles;
 }
