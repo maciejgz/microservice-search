@@ -53,8 +53,8 @@ public class StrapiServiceImpl implements StrapiService {
 
     protected static final String RESULT_DIRECTORY = "C:\\Users\\maciej\\result\\";
 
-    //private final static String CMS_URL = "http://localhost:1337";
-    private final static String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
+    private final static String CMS_URL = "http://localhost:1337";
+    //private final static String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
 
     //header
     protected static final String AUTHORIZATION_HEADER = "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1";
@@ -172,7 +172,7 @@ public class StrapiServiceImpl implements StrapiService {
 
             CsvToBean<ProductEntry> csvToBean = new CsvToBeanBuilder<ProductEntry>(br)
                     .withMappingStrategy(strategy)
-                    .withSeparator(',')
+                    .withSeparator(';')
                     .withQuoteChar('\"')
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
