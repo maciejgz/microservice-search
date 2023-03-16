@@ -14,6 +14,8 @@ public class ProductEntry {
 
     @CsvBindByName(column = "code")
     private String code;
+    @CsvBindByName(column = "main_image")
+    private String mainImage;
     @CsvBindByName(column = "images")
     private String images;
     @CsvBindByName(column = "additional_files")
@@ -22,14 +24,10 @@ public class ProductEntry {
     private String titleDe;
     @CsvBindByName(column = "description_de")
     private String descriptionDe;
+    @CsvBindByName(column = "short_description_de")
+    private String shortDescriptionDe;
     @CsvBindByName(column = "slug_de")
     private String slugDe;
-    @CsvBindByName(column = "title_pl")
-    private String titlePl;
-    @CsvBindByName(column = "description_pl")
-    private String descriptionPl;
-    @CsvBindByName(column = "slug_pl")
-    private String slugPl;
     @CsvBindByName(column = "region")
     private String[] region;
 

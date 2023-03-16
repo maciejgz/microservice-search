@@ -20,7 +20,6 @@ import pl.mg.search.gateway.strapi.command.ImportProductsCommand;
 import pl.mg.search.gateway.strapi.model.CatalogEntry;
 import pl.mg.search.gateway.strapi.model.Image;
 import pl.mg.search.gateway.strapi.model.ProductCmsData;
-import pl.mg.search.gateway.strapi.model.ProductCmsLocalization;
 import pl.mg.search.gateway.strapi.model.ProductCmsModel;
 import pl.mg.search.gateway.strapi.model.ProductEntry;
 
@@ -53,8 +52,8 @@ public class StrapiServiceImpl implements StrapiService {
 
     protected static final String RESULT_DIRECTORY = "C:\\Users\\maciej\\result\\";
 
-    private final static String CMS_URL = "http://localhost:1337";
-    //private final static String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
+    private static final String CMS_URL = "http://localhost:1337";
+    //private static final String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
 
     //header
     protected static final String AUTHORIZATION_HEADER = "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1";
@@ -94,15 +93,14 @@ public class StrapiServiceImpl implements StrapiService {
                 .map(catalogEntry ->
                         ProductEntry.builder()
                                 .code(catalogEntry.getCode())
+                                .mainImage(catalogEntry.getCode() + "-1.jpg")
                                 .images(catalogEntry.getCode() + "-1.jpg," + catalogEntry.getCode() + "-2.jpg,"
                                         + catalogEntry.getCode() + "-3.jpg")
                                 .additionalFiles(catalogEntry.getCode() + "-add1.pdf")
                                 .titleDe(catalogEntry.getName())
                                 .descriptionDe(catalogEntry.getDescription())
                                 .slugDe(catalogEntry.getName().toLowerCase().replace(" ", "-"))
-                                .titlePl("PL " + catalogEntry.getName())
-                                .descriptionPl("PL " + catalogEntry.getDescription())
-                                .slugPl(catalogEntry.getName().toLowerCase().replace(" ", "-"))
+                                .shortDescriptionDe(catalogEntry.getShortDescription())
                                 .region(new String[]{"germany"})
                                 .build()
                 ).toList();
@@ -115,7 +113,7 @@ public class StrapiServiceImpl implements StrapiService {
                 Path.of(RESULT_DIRECTORY + "bs_products_cms_import_small.csv").toFile())) {
             StatefulBeanToCsv<ProductEntry> sbc = new StatefulBeanToCsvBuilder<ProductEntry>(writer)
                     .withQuotechar('\"')
-                    .withSeparator(ICSVWriter.DEFAULT_SEPARATOR)
+                    .withSeparator(';')
                     .build();
             sbc.write(entries);
 
@@ -189,8 +187,9 @@ public class StrapiServiceImpl implements StrapiService {
                 ProductCmsModel cmsModel = ProductCmsModel.builder()
                         .title(product.getTitleDe())
                         .description(product.getDescriptionDe())
+                        .shortDescription(product.getShortDescriptionDe())
                         .productCode(product.getCode())
-                        .slug(toSlug(product.getSlugDe()))
+                        .slug(StringUtils.isNotBlank(product.getSlugDe()) ? toSlug(product.getSlugDe()) : "")
                         .region(new String[]{"germany"})
                         .build();
                 if (StringUtils.isNotBlank(product.getImages())) {
@@ -200,6 +199,9 @@ public class StrapiServiceImpl implements StrapiService {
                         Optional<String> image = findImageId(split[i]);
                         if (image.isPresent()) {
                             reee[i] = new Image(Integer.parseInt(image.get()));
+                            if (i == 0) {
+                                cmsModel.setMainImage(new Image(Integer.parseInt(image.get())));
+                            }
                         }
                     }
                     cmsModel.setImages(reee);
@@ -233,7 +235,7 @@ public class StrapiServiceImpl implements StrapiService {
                 String regex = ".*\"id\": ?(\\d+),.*";
                 Pattern pattern = Pattern.compile(regex);
                 Matcher matcher = pattern.matcher(res.body());
-                if (matcher.matches()) {
+                /*if (matcher.matches()) {
                     String id = matcher.group(1);
                     ProductCmsLocalization localizationData = new ProductCmsLocalization();
                     localizationData.setLocale("pl");
@@ -274,7 +276,7 @@ public class StrapiServiceImpl implements StrapiService {
                             .build();
 
                     HttpResponse<String> resLocale = client.send(localizationRequest, BodyHandlers.ofString());
-                }
+                }*/
             } catch (URISyntaxException | IOException | InterruptedException e) {
                 log.error(e.getMessage(), e);
             }
@@ -303,7 +305,7 @@ public class StrapiServiceImpl implements StrapiService {
             try (CSVReader csvReader = new CSVReader(reader)) {
                 List<String[]> result = csvReader.readAll();
                 for (String[] strings : result) {
-                    ls.add(new CatalogEntry(strings[0], strings[1], strings[2]));
+                    ls.add(new CatalogEntry(strings[0], strings[1], strings[2], strings[3]));
                 }
             }
         } catch (IOException | CsvException e) {

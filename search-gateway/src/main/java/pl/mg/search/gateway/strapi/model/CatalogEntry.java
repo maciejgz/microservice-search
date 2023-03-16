@@ -14,5 +14,7 @@ public class CatalogEntry {
     private String name;
     @CsvBindByName(column = "description")
     private String description;
+    @CsvBindByName(column = "short_description")
+    private String shortDescription;
 
 }
