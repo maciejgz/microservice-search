@@ -2,7 +2,6 @@ package pl.mg.search.gateway.strapi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
-import com.opencsv.ICSVWriter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
@@ -43,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -189,7 +189,10 @@ public class StrapiServiceImpl implements StrapiService {
                         .description(product.getDescriptionDe())
                         .shortDescription(product.getShortDescriptionDe())
                         .productCode(product.getCode())
-                        .slug(StringUtils.isNotBlank(product.getSlugDe()) ? toSlug(product.getSlugDe()) : "")
+                        .slug(StringUtils.isNotBlank(product.getSlugDe()) ? toSlug(product.getSlugDe())
+                                + new Random().nextInt(100000)
+                                : String.valueOf(
+                                        new Random().nextInt(100000)))
                         .region(new String[]{"germany"})
                         .build();
                 if (StringUtils.isNotBlank(product.getImages())) {
