@@ -12,6 +12,7 @@ import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import pl.mg.search.gateway.strapi.command.GenerateCsvCommand;
 import pl.mg.search.gateway.strapi.command.GenerateImageCommand;
@@ -52,8 +53,9 @@ public class StrapiServiceImpl implements StrapiService {
 
     protected static final String RESULT_DIRECTORY = "C:\\Users\\maciej\\result\\";
 
-    private static final String CMS_URL = "http://localhost:1337";
+    //private static final String CMS_URL = "http://localhost:1337";
     //private static final String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
+    private static final String CMS_URL = "https://cmsbt1.betterstyle.eu";
 
     //header
     protected static final String AUTHORIZATION_HEADER = "Bearer 54c8d08d7a60d0428a1ff37165995882c48667e98f554c5ff71fbb012ff5e4e6b74f922efd9c4a4a552a7685a780290f0a38d27d26763e31c61e303365190ea6dbdc74ef168ee962d02115f8745bcb2af64cd6789d3cf7cc68701b429db97cb77d48667a418411d26f4d7a6d4f13abdf9f963135086c89045bcdb6dbe3f07ac1";
@@ -195,30 +197,33 @@ public class StrapiServiceImpl implements StrapiService {
                                         new Random().nextInt(100000)))
                         .region(new String[]{"germany"})
                         .build();
+                if (StringUtils.isNotBlank(product.getMainImage())) {
+                    Optional<String> image = findImageId(product.getMainImage());
+                    image.ifPresent(s -> cmsModel.setMainImage(new Image(Integer.parseInt(s))));
+                }
                 if (StringUtils.isNotBlank(product.getImages())) {
                     String[] split = product.getImages().split(",");
-                    Image[] reee = new Image[split.length];
+                    List<Image> imageees = new ArrayList<>();
                     for (int i = 0; i < split.length; i++) {
                         Optional<String> image = findImageId(split[i]);
-                        if (image.isPresent()) {
-                            reee[i] = new Image(Integer.parseInt(image.get()));
-                            if (i == 0) {
-                                cmsModel.setMainImage(new Image(Integer.parseInt(image.get())));
-                            }
-                        }
+                        image.ifPresent(s -> imageees.add(new Image(Integer.parseInt(s))));
                     }
-                    cmsModel.setImages(reee);
+                    if (CollectionUtils.isNotEmpty(imageees)) {
+                        Image[] array = new Image[imageees.size()];
+                        cmsModel.setImages(imageees.toArray(array));
+                    }
                 }
                 if (StringUtils.isNotBlank(product.getAdditionalFiles())) {
                     String[] split = product.getAdditionalFiles().split(",");
-                    Image[] reee = new Image[split.length];
+                    List<Image> adds = new ArrayList<>();
                     for (int i = 0; i < split.length; i++) {
                         Optional<String> image = findImageId(split[i]);
-                        if (image.isPresent()) {
-                            reee[i] = new Image(Integer.parseInt(image.get()));
-                        }
+                        image.ifPresent(s -> adds.add(new Image(Integer.parseInt(s))));
                     }
-                    cmsModel.setAdditionalFiles(reee);
+                    if (CollectionUtils.isNotEmpty(adds)) {
+                        Image[] array = new Image[adds.size()];
+                        cmsModel.setAdditionalFiles(adds.toArray(array));
+                    }
                 }
                 ProductCmsData data = new ProductCmsData(cmsModel);
                 HttpRequest request = HttpRequest.newBuilder()
