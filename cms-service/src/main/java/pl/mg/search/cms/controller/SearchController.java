@@ -10,7 +10,6 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.mg.search.cms.domain.CmsProduct;
 import pl.mg.search.cms.domain.CmsProductRepository;
@@ -43,5 +42,4 @@ public class SearchController {
         Page<?> result = this.repository.findAll(example, page);
         return ResponseEntity.ok(assembler.toModel(result, entityAssembler));
     }
-
 }
