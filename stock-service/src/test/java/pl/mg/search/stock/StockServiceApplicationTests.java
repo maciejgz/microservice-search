@@ -1,51 +1,56 @@
 package pl.mg.search.stock;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
+import pl.mg.search.stock.domain.StockProduct;
+import pl.mg.search.stock.domain.StockProductRepository;
 
-import javax.sql.DataSource;
+import java.math.BigDecimal;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @Testcontainers
 class StockServiceApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+    @Autowired
+    private PostgreSQLContainer<?> container;
+    @Autowired
+    private StockProductRepository repository;
 
-    private static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER =
-            new PostgreSQLContainer<>(DockerImageName.parse("postgres:13-alpine"))
-                    .withDatabaseName("test")
-                    .withUsername("test")
-                    .withPassword("test");
+/*    @BeforeEach
+    public void restartDB() {
+        container.stop();
+        container
+                .withInitScript("initDB.sql")
+                .start();
+    }*/
 
-    static {
-        POSTGRESQL_CONTAINER.start();
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        System.out.println("AAAAA: " + POSTGRESQL_CONTAINER.getJdbcUrl());
-        return DataSourceBuilder.create()
-                .url(POSTGRESQL_CONTAINER.getJdbcUrl())
-                .username(POSTGRESQL_CONTAINER.getUsername())
-                .password(POSTGRESQL_CONTAINER.getPassword())
-                .build();
+    @BeforeEach
+    public void cleanUp() {
+        repository.deleteAll();
     }
 
     @Test
-    void test() {
-        assertTrue(POSTGRESQL_CONTAINER.isRunning());
+    void testContainer() {
+        assertTrue(container.isRunning());
+    }
+
+    @Test
+    void testSave() {
+        StockProduct product = new StockProduct(1L, 1L, new BigDecimal(12), "test");
+        repository.save(product);
+        assertTrue(repository.findById(1L).isPresent());
+    }
+
+    @Test
+    void testEmptyTable() {
+        assertFalse(repository.findById(1L).isPresent());
     }
 
 }
