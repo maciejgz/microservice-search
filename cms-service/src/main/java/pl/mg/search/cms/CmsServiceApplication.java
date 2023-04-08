@@ -10,7 +10,4 @@ public class CmsServiceApplication {
         SpringApplication.run(CmsServiceApplication.class, args);
     }
 
-
-
-
 }
