@@ -2,11 +2,7 @@ package pl.mg.search.gateway.strapi.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
@@ -17,11 +13,7 @@ import org.springframework.stereotype.Service;
 import pl.mg.search.gateway.strapi.command.GenerateCsvCommand;
 import pl.mg.search.gateway.strapi.command.GenerateImageCommand;
 import pl.mg.search.gateway.strapi.command.ImportProductsCommand;
-import pl.mg.search.gateway.strapi.model.CatalogEntry;
-import pl.mg.search.gateway.strapi.model.Image;
-import pl.mg.search.gateway.strapi.model.ProductCmsData;
-import pl.mg.search.gateway.strapi.model.ProductCmsModel;
-import pl.mg.search.gateway.strapi.model.ProductEntry;
+import pl.mg.search.gateway.strapi.model.*;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -39,11 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,7 +41,9 @@ public class StrapiServiceImpl implements StrapiService {
 
     protected static final String RESULT_DIRECTORY = "C:\\Users\\maciej\\result\\";
 
-    //private static final String CMS_URL = "http://localhost:1337";
+    private static final boolean OVERWRITE_EXISTING_ENTRIES = true;
+
+//    private static final String CMS_URL = "http://localhost:1337";
     //private static final String CMS_URL = "https://cms-dev-betterstyle.eversis.com";
     private static final String CMS_URL = "https://cmsbt1.betterstyle.eu";
 
@@ -141,7 +131,7 @@ public class StrapiServiceImpl implements StrapiService {
         try {
             HttpClient client = HttpClient.newBuilder().build();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(CMS_URL + "/api/upload/files?filters[name][$eq]=" + imageName))
+                    .uri(new URI(CMS_URL + "/api/upload/files?filters[name][$eq]=" + imageName.trim()))
                     .header("Authorization",
                             AUTHORIZATION_HEADER)
                     .GET()
@@ -194,9 +184,12 @@ public class StrapiServiceImpl implements StrapiService {
                         .slug(StringUtils.isNotBlank(product.getSlugDe()) ? toSlug(product.getSlugDe())
                                 + new Random().nextInt(100000)
                                 : String.valueOf(
-                                        new Random().nextInt(100000)))
+                                new Random().nextInt(100000)))
                         .region(new String[]{"germany"})
                         .build();
+                if (OVERWRITE_EXISTING_ENTRIES) {
+                    this.findProduct(product.getCode()).ifPresent(this::deleteProduct);
+                }
                 if (StringUtils.isNotBlank(product.getMainImage())) {
                     Optional<String> image = findImageId(product.getMainImage());
                     image.ifPresent(s -> cmsModel.setMainImage(new Image(Integer.parseInt(s))));
@@ -304,6 +297,52 @@ public class StrapiServiceImpl implements StrapiService {
     @Override
     public void deleteProducts() {
         //TODO implement
+    }
+
+    @Override
+    public void deleteProduct(String id) {
+        try {
+            HttpClient client = HttpClient.newBuilder().build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(CMS_URL + "/api/products/" + id))
+                    .headers("Content-Type", "application/json")
+                    .header("Authorization",
+                            AUTHORIZATION_HEADER)
+                    .DELETE()
+                    .build();
+
+            HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
+            log.debug(res.body());
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Optional<String> findProduct(String code) {
+        try {
+            HttpClient client = HttpClient.newBuilder().build();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(CMS_URL + "/api/products?locale=de&filters[region][$containsi]=germany&filters[productCode][$eq]=" + code))
+                    .headers("Content-Type", "application/json")
+                    .header("Authorization",
+                            AUTHORIZATION_HEADER)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
+            String regex = ".*\"id\": ?(\\d+),.*";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(res.body());
+            if (matcher.matches()) {
+                String id = matcher.group(1);
+                log.debug("Found product with code: " + code + " with id: " + id);
+                return Optional.of(id);
+            }
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            log.error(e.getMessage(), e);
+        }
+        return Optional.empty();
     }
 
     private List<CatalogEntry> listCsvCatalogEntries(String catalogCsvPath) {
