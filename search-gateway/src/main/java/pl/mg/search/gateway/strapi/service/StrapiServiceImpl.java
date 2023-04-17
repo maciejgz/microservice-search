@@ -176,6 +176,9 @@ public class StrapiServiceImpl implements StrapiService {
 
         for (ProductEntry product : products) {
             try {
+                String slug = product.getTitleDe().replaceAll("[^a-zA-Z0-9\\s]", "")
+                        .replaceAll("\\s+", "-")
+                        .toLowerCase();
                 ProductCmsModel cmsModel = ProductCmsModel.builder()
                         .title(product.getTitleDe())
                         .description(product.getDescriptionDe())
@@ -183,8 +186,7 @@ public class StrapiServiceImpl implements StrapiService {
                         .productCode(product.getCode())
                         .slug(StringUtils.isNotBlank(product.getSlugDe()) ? toSlug(product.getSlugDe())
                                 + new Random().nextInt(100000)
-                                : String.valueOf(
-                                new Random().nextInt(100000)))
+                                : slug)
                         .region(new String[]{"germany"})
                         .build();
                 if (OVERWRITE_EXISTING_ENTRIES) {
