@@ -176,16 +176,13 @@ public class StrapiServiceImpl implements StrapiService {
 
         for (ProductEntry product : products) {
             try {
-                String slug = product.getTitleDe().replaceAll("[^a-zA-Z0-9\\s]", "")
-                        .replaceAll("\\s+", "-")
-                        .toLowerCase();
+                String slug = toSlug(product.getCode()) + "-" + toSlug(product.getTitleDe());
                 ProductCmsModel cmsModel = ProductCmsModel.builder()
                         .title(product.getTitleDe())
                         .description(product.getDescriptionDe())
                         .shortDescription(product.getShortDescriptionDe())
                         .productCode(product.getCode())
                         .slug(StringUtils.isNotBlank(product.getSlugDe()) ? toSlug(product.getSlugDe())
-                                + new Random().nextInt(100000)
                                 : slug)
                         .region(new String[]{"germany"})
                         .build();
