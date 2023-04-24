@@ -200,6 +200,7 @@ public class StrapiServiceImpl implements StrapiService {
                         Optional<String> image = findImageId(split[i]);
                         image.ifPresent(s -> imageees.add(new Image(Integer.parseInt(s))));
                     }
+                    //release changes asasa
                     if (CollectionUtils.isNotEmpty(imageees)) {
                         Image[] array = new Image[imageees.size()];
                         cmsModel.setImages(imageees.toArray(array));
