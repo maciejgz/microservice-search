@@ -176,7 +176,7 @@ public class StrapiServiceImpl implements StrapiService {
 
         for (ProductEntry product : products) {
             try {
-                String slug = toSlug(product.getCode()) + "-" + toSlug(product.getTitleDe());
+                String slug = toSlug(toSlug(product.getTitleDe()));
                 ProductCmsModel cmsModel = ProductCmsModel.builder()
                         .title(product.getTitleDe())
                         .description(product.getDescriptionDe())
@@ -230,7 +230,7 @@ public class StrapiServiceImpl implements StrapiService {
 
                 HttpResponse<String> res = client.send(request, BodyHandlers.ofString());
 
-                log.debug(res.body());
+                log.debug("status code: " + res.statusCode() + "body" + res.body());
                 //get ID of created product
                 String regex = ".*\"id\": ?(\\d+),.*";
                 Pattern pattern = Pattern.compile(regex);
