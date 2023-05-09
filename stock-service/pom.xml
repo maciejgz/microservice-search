@@ -59,6 +59,11 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- FlyWay -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
 
         <!-- TESTS -->
         <dependency>
