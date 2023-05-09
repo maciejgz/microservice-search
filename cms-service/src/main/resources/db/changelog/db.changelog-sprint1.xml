@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="BSI-test_user_sequence" author="maciejgz">
+        <preConditions>
+            <and>
+                <customPrecondition className="pl.mg.search.cms.PreconditionTest">
+                </customPrecondition>
+               <!-- <sqlCheck expectedResult="DE">
+                    select value
+                    from system_params sp
+                    where "key" = 'CONFIGURATION_CODE';
+                </sqlCheck>-->
+                <not>
+                    <sequenceExists sequenceName=""/>
+                </not>
+            </and>
+        </preConditions>
+        <createSequence cacheSize="2000" cycle="false" incrementBy="1" sequenceName="SEQ_TABLE_TEST_USER"
+                        startValue="1"/>
+    </changeSet>
+
+    <changeSet id="BSI-test" author="maciejgz">
+        <preConditions>
+            <and>
+                <customPrecondition className="pl.mg.search.cms.PreconditionTest">
+                </customPrecondition>
+                <!--<sqlCheck expectedResult="DE">
+                    select value
+                    from system_params sp
+                    where "key" = 'CONFIGURATION_CODE';
+                </sqlCheck>-->
+                <not>
+                    <tableExists tableName="test_user"/>
+                </not>
+            </and>
+        </preConditions>
+        <createTable tableName="test_user">
+            <column name="id" type="integer" defaultValueComputed="nextval('SEQ_TABLE_TEST_USER')">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
