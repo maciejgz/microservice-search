@@ -31,12 +31,12 @@ public class SearchController {
             PersistentEntityResourceAssembler entityAssembler,
             @RequestParam(name = "q") String query
     ) {
-        ExampleMatcher matcher = ExampleMatcher.matchingAny()
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAny()
                 .withIgnoreCase()
                 .withMatcher(CATEGORY_LABEL, ExampleMatcher.GenericPropertyMatchers.contains())
                 .withMatcher(TITLE_LABEL, ExampleMatcher.GenericPropertyMatchers.contains())
                 .withIgnorePaths(STOCK_PRODUCT_ID_LABEL);
-        product.setCategory(query);
         Example<StockProduct> example = Example.of(product, matcher);
         Page<?> result = this.repository.findAll(example, page);
         return ResponseEntity.ok(assembler.toModel(result, entityAssembler));

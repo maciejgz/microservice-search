@@ -1,4 +1,4 @@
-package pl.mg.search.cms.domain;
+package pl.mg.search.stock.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +10,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "stock_product_translation")
+@Table(name = "cms_product_translation")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CmsProductTranslation {
+public class StockProductTranslation {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)

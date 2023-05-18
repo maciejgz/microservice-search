@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -31,7 +29,6 @@ public class CmsProduct {
 
     @Column(name = "description", length = 5000)
     private String description;
-
 
     @OneToMany(cascade = jakarta.persistence.CascadeType.ALL,
                orphanRemoval = true
