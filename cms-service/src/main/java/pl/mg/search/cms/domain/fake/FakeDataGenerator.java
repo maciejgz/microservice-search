@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import pl.mg.search.cms.domain.CmsProduct;
 import pl.mg.search.cms.domain.CmsProductRepository;
 import pl.mg.search.cms.domain.CmsProductTranslation;
+import pl.mg.search.cms.domain.SearchModel;
+import pl.mg.search.cms.domain.SearchModelRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,15 +14,17 @@ import java.util.Set;
 @Component
 public class FakeDataGenerator {
 
-    private final CmsProductRepository repo;
+    private final CmsProductRepository cmsProductRepo;
+    private final SearchModelRepository searchModelRepository;
     private final Faker faker = new Faker();
 
-    public FakeDataGenerator(CmsProductRepository repo) {
-        this.repo = repo;
+    public FakeDataGenerator(CmsProductRepository cmsProductRepo, SearchModelRepository searchModelRepository) {
+        this.cmsProductRepo = cmsProductRepo;
+        this.searchModelRepository = searchModelRepository;
     }
 
     public void initializeFakeData() {
-        if (repo.count() == 0) {
+        if (cmsProductRepo.count() == 0) {
             for (int i = 0; i < 30000; i++) {
                 Set<CmsProductTranslation> translations = new HashSet<>();
                 translations.add(new CmsProductTranslation(i + 1L, i + 1L, "de", "de_" + faker.commerce().productName(),
@@ -30,9 +34,28 @@ public class FakeDataGenerator {
                         "en_" + faker.commerce().material()));
                 CmsProduct cmsProduct = new CmsProduct(i + 1L, i + 1L, faker.commerce().productName(),
                         faker.commerce().material(), translations);
-                repo.save(cmsProduct);
+                cmsProductRepo.save(cmsProduct);
             }
         }
+
+        //faster fake data generator directly in database
+        /*
+        insert into search_table(description, "language", title)
+	SELECT md5(random()::text), 'pl', md5(random()::text) FROM generate_series(1, 10000000) s(i);
+
+
+insert into search_table(description, "language", title)
+	SELECT md5(random()::text), 'de', md5(random()::text) FROM generate_series(1, 10000000) s(i);
+
+insert into search_table(description, "language", title)
+	SELECT md5(random()::text), 'es', md5(random()::text) FROM generate_series(1, 10000000) s(i);
+
+insert into search_table(description, "language", title)
+	SELECT md5(random()::text), 'en', md5(random()::text) FROM generate_series(1, 10000000) s(i);
+
+insert into search_table(description, "language", title)
+	SELECT md5(random()::text), 'de', md5(random()::text) FROM generate_series(1, 10000000) s(i);
+         */
     }
 }
 

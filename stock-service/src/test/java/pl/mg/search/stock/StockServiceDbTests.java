@@ -11,6 +11,7 @@ import pl.mg.search.stock.domain.StockProductRepository;
 
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,7 +51,7 @@ class StockServiceDbTests {
     @Test
     void testSave() {
         insertRandomData();
-        StockProduct product = new StockProduct(1L, 1L, new BigDecimal(12), "test");
+        StockProduct product = new StockProduct(1L, 1L, new BigDecimal(12), "test", Collections.emptySet());
         repository.save(product);
         assertTrue(repository.findById(1L).isPresent());
     }
