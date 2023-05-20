@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="cms-search-table-seq" author="maciejgz">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="seq_table_search_table" />
+            </not>
+        </preConditions>
+        <createSequence cacheSize="2000" cycle="false" incrementBy="1" sequenceName="seq_table_search_table"
+                startValue="1"/>
+    </changeSet>
+    <changeSet id="maciejgz-cms-search-table" author="maciejgz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="search_table"/>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE TABLE search_table
+            (
+                id          bigserial,
+                description varchar(255) NULL,
+                "language"  varchar(255) NULL,
+                title       varchar(255) NULL
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

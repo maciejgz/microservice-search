@@ -5,6 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <include file="classpath:/db/changelog/db.changelog-initdb.xml"/>
     <include file="classpath:/db/changelog/db.changelog-sprint1.xml"/>
+    <include file="classpath:/db/changelog/db.changelog-indexes.xml"/>
 
 </databaseChangeLog>
