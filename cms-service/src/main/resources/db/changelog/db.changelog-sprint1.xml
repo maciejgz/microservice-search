@@ -6,7 +6,7 @@
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="BSI-test_user_sequence" author="maciejgz">
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <and>
                 <customPrecondition className="pl.mg.search.cms.PreconditionTest">
                 </customPrecondition>
@@ -25,7 +25,7 @@
     </changeSet>
 
     <changeSet id="BSI-test" author="maciejgz">
-        <preConditions>
+        <preConditions onFail="MARK_RAN">
             <and>
                 <customPrecondition className="pl.mg.search.cms.PreconditionTest">
                 </customPrecondition>

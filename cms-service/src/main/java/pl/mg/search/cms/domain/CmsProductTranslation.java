@@ -1,27 +1,27 @@
 package pl.mg.search.cms.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "stock_product_translation")
-@Data
+@Table(name = "cms_product_translation")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(CmsProductTranslationListener.class)
 public class CmsProductTranslation {
 
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "stock_product_id")
-    private long stockProductId;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "cms_product_id")
+    private CmsProduct product;
 
     private String language;
 

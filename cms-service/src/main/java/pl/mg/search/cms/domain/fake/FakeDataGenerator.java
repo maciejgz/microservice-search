@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import pl.mg.search.cms.domain.CmsProduct;
 import pl.mg.search.cms.domain.CmsProductRepository;
 import pl.mg.search.cms.domain.CmsProductTranslation;
-import pl.mg.search.cms.domain.SearchModel;
-import pl.mg.search.cms.domain.SearchModelRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,25 +13,23 @@ import java.util.Set;
 public class FakeDataGenerator {
 
     private final CmsProductRepository cmsProductRepo;
-    private final SearchModelRepository searchModelRepository;
     private final Faker faker = new Faker();
 
-    public FakeDataGenerator(CmsProductRepository cmsProductRepo, SearchModelRepository searchModelRepository) {
+    public FakeDataGenerator(CmsProductRepository cmsProductRepo) {
         this.cmsProductRepo = cmsProductRepo;
-        this.searchModelRepository = searchModelRepository;
     }
 
     public void initializeFakeData() {
         if (cmsProductRepo.count() == 0) {
             for (int i = 0; i < 30000; i++) {
                 Set<CmsProductTranslation> translations = new HashSet<>();
-                translations.add(new CmsProductTranslation(i + 1L, i + 1L, "de", "de_" + faker.commerce().productName(),
-                        "de_" + faker.commerce().material()));
-                translations.add(new CmsProductTranslation(i + 60000 + 1L, i + 1L, "en",
-                        "en" + faker.commerce().productName(),
-                        "en_" + faker.commerce().material()));
                 CmsProduct cmsProduct = new CmsProduct(i + 1L, i + 1L, faker.commerce().productName(),
                         faker.commerce().material(), translations);
+                translations.add(new CmsProductTranslation(i + 1L, cmsProduct, "de", "de_" + faker.commerce().productName(),
+                        "de_" + faker.commerce().material()));
+                translations.add(new CmsProductTranslation(i + 60000 + 1L, cmsProduct, "en",
+                        "en" + faker.commerce().productName(),
+                        "en_" + faker.commerce().material()));
                 cmsProductRepo.save(cmsProduct);
             }
         }

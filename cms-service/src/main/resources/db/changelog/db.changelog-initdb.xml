@@ -26,7 +26,6 @@
             <not>
                 <tableExists tableName="cms_product_translation"/>
             </not>
-            <tableExists tableName="public.cms_product"/>
         </preConditions>
         <sql>
             CREATE TABLE public.cms_product_translation
@@ -37,7 +36,7 @@
                 cms_product_id int8 NULL,
                 title          varchar(255) NULL,
                 CONSTRAINT cms_product_translation_pkey PRIMARY KEY (id),
-                CONSTRAINT fk1ga1rjev3s7yvhi1ec29ml6j3 FOREIGN KEY (cms_product_id) REFERENCES public.cms_product (id)
+                CONSTRAINT cms_product_translation_fk FOREIGN KEY (cms_product_id) REFERENCES public.cms_product(id)
             );
         </sql>
     </changeSet>
