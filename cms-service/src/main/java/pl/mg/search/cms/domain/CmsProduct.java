@@ -6,15 +6,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "cms_product")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CmsProduct {
@@ -35,5 +35,12 @@ public class CmsProduct {
     )
     @JoinColumn(name = "cms_product_id")
     private Set<CmsProductTranslation> translations;
+
+    public void addTranslation(CmsProductTranslation translation) {
+        if (translations == null) {
+            translations = new HashSet<>();
+        }
+        this.translations.add(translation);
+    }
 
 }

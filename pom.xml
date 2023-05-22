@@ -10,9 +10,12 @@
     </parent>
     <groupId>pl.mg</groupId>
     <artifactId>microservice-search</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>microservice-search</name>
+    <properties>
+        <java.version>20</java.version>
+    </properties>
     <modules>
         <module>search-gateway</module>
         <module>stock-service</module>
