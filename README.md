@@ -12,5 +12,5 @@ The main goal of this project is to find the best solution for the search functi
 data to be searched or sorted is located in different services.
 
 
-## Approach #1 - selective replication
+## Approach #1 - selective replication - DONE
 Data from the CMS service is replicated to the stock service. The stock service is responsible for the search and sorting.
