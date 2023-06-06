@@ -20,5 +20,6 @@
         <module>search-gateway</module>
         <module>stock-service</module>
         <module>cms-service</module>
+        <module>ms-commons</module>
     </modules>
 </project>

@@ -2,6 +2,7 @@ package pl.mg.search.cms.event;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import pl.mg.search.cms.domain.CmsProduct;
 import pl.mg.search.cms.domain.CmsProductRepository;
 import pl.mg.search.cms.domain.CmsProductTranslation;
@@ -18,6 +19,7 @@ public class CmsProductEventListener implements ApplicationListener<CmsProductCr
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(CmsProductCreatedEvent event) {
         System.out.println("Received spring custom event - " + event.getMessage());
 
@@ -31,7 +33,7 @@ public class CmsProductEventListener implements ApplicationListener<CmsProductCr
         translation.setLanguage("EN");
         translation.setTitle("test");
         translation.setDescription("test");
-        translation.setCmsProductId(1L);
+        translation.setProduct(repository.findById(1L).orElseThrow());
         cmsProduct.addTranslation(translation);
         CmsProduct save = this.repository.save(cmsProduct);
         System.out.println(save);
