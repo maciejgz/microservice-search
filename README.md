@@ -3,7 +3,6 @@
 Case study of the search problem in the microservice environment when data is stored in two different microservices.
 
 ### Modules
-
 - gateway service - middleware app when search is performed
 - stock service 
 - CMS service
@@ -13,8 +12,8 @@ data to be searched or sorted is located in different services.
 
 All the services should be run in the docker environment with K8S.
 
-
-## Approach #1 - selective replication - DONE
+## Requirements
+### Approach #1 - selective replication - DONE
 Data from the CMS service is replicated to the stock service using Kafka. The stock service is responsible for the search and sorting.
 <br />
 Scenario:
@@ -24,10 +23,39 @@ Scenario:
 - The stock service is listening to the topic and when the event is received, the product is updated with the translation data
 
 
+## Build
+### Build project
+```shell
+mvn clean compile package -Dmaven.test.skip=true
+```
+
+### Build with tests
+```shell
+mvn clean compile package
+```
+
+### Build docker images
+```shell
+clean compile package spring-boot:build-image -Dmaven.test.skip=true -Pbuild-docker-images
+```
 
 ## Deployment
 
 ### Docker compose
+Scripts are stored in the
+Before building the app you need to build the docker images: [Build docker images](#build-docker-images).
+<br />Then go to [docker](docker) directory and run scripts.
+Windows:
+```shell
+./start.bat
+```
+
+Linux:
+```shell
+./start.sh
+```
+
+### Kubernetes
 
 
 
