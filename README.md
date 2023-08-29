@@ -2,7 +2,7 @@
 
 Case study of the search problem in the microservice environment when data is stored in two different microservices.
 
-### Applications:
+### Modules
 
 - gateway service - middleware app when search is performed
 - stock service 
@@ -15,6 +15,20 @@ All the services should be run in the docker environment with K8S.
 
 
 ## Approach #1 - selective replication - DONE
-Data from the CMS service is replicated to the stock service. The stock service is responsible for the search and sorting.
+Data from the CMS service is replicated to the stock service using Kafka. The stock service is responsible for the search and sorting.
+<br />
+Scenario:
+- Products are created in the stock-service
+- Translations of products are created in the CMS service
+- When translation is created, the event is sent to the Kafka topic
+- The stock service is listening to the topic and when the event is received, the product is updated with the translation data
+
+
+
+## Deployment
+
+### Docker compose
+
+
 
 
