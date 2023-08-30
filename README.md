@@ -42,9 +42,9 @@ clean compile package spring-boot:build-image -Dmaven.test.skip=true -Pbuild-doc
 ## Deployment
 
 ### Docker compose
-Scripts are stored in the
 Before building the app you need to build the docker images: [Build docker images](#build-docker-images).
 <br />Then go to [docker](docker) directory and run scripts.
+<br />Do not run all the scripts on your own - use the following scripts to run all the containers.
 Windows:
 ```shell
 ./start.bat
