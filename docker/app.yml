@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   ms-cms-service:
-    image: cms-service:latest
+    image: ms-cms-service:latest
     ports:
       - "8100-8102:8081"
     deploy:
@@ -14,9 +14,9 @@ services:
       - ms-network
 
   ms-stock-service:
-    image: stock-service:latest
+    image: ms-stock-service:latest
     ports:
-      - "8090-8092:8082"
+      - "8091-8093:8082"
     deploy:
       replicas: 3
       mode: replicated
@@ -25,12 +25,12 @@ services:
     networks:
       - ms-network
 
-  ms-search-gateway:
-    image: search-gateway:latest
+  ms-api-gateway:
+    image: ms-api-gateway:latest
     ports:
-      - "8080-8082:8080"
+      - "8080:8080"
     deploy:
-      replicas: 3
+      replicas: 1
       mode: replicated
     environment:
       - MS_STOCK_API=http://ms-stock-service:8082
