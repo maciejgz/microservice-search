@@ -3,9 +3,9 @@
 Case study of the search problem in the microservice environment when data is stored in two different microservices.
 
 ### Modules
-- gateway service - middleware app when search is performed
-- stock service 
-- CMS service
+- gateway service - middleware app when search is performed - ports 8080-8089
+- stock service - ports 8090-8099
+- CMS service - ports 8100-8109
 
 The main goal of this project is to find the best solution for the search functionality in the distributed system when
 data to be searched or sorted is located in different services.
@@ -46,7 +46,7 @@ Before building the app you need to build the docker images: [Build docker image
 <br />Then go to [docker](docker) directory and run scripts.
 <br />Do not run all the scripts on your own - use the following scripts to run all the containers.
 Windows:
-```shell
+```windows
 ./start.bat
 ```
 
