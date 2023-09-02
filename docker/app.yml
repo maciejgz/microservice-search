@@ -1,11 +1,13 @@
-version: '3'
+version: '3.8'
 
 services:
   ms-cms-service:
     image: cms-service:latest
-    container_name: ms-cms-service
     ports:
-      - "8081:8081"
+      - "8100-8102:8081"
+    deploy:
+      replicas: 3
+      mode: replicated
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ms-db:5432/cms
     networks:
@@ -13,9 +15,11 @@ services:
 
   ms-stock-service:
     image: stock-service:latest
-    container_name: ms-stock-service
     ports:
-      - "8082:8082"
+      - "8090-8092:8082"
+    deploy:
+      replicas: 3
+      mode: replicated
     environment:
         - SPRING_DATASOURCE_URL=jdbc:postgresql://ms-db:5432/stock
     networks:
@@ -23,9 +27,11 @@ services:
 
   ms-search-gateway:
     image: search-gateway:latest
-    container_name: ms-search-gateway
     ports:
-      - "8080:8080"
+      - "8080-8082:8080"
+    deploy:
+      replicas: 3
+      mode: replicated
     environment:
       - MS_STOCK_API=http://ms-stock-service:8082
       - MS_CMS_API=http://ms-cms-service:8081
