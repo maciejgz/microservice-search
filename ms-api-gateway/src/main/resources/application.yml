@@ -1,7 +1,6 @@
 server:
   port: 8080
 
-
 management:
   endpoint:
     gateway:
@@ -12,3 +11,19 @@ management:
         include: gateway
 
 ## API Gateway routes
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: stock-service-route
+          uri: http://localhost:8091
+          predicates:
+            - Path=/api/stockProduct/**
+          filters:
+            - RewritePath=/api/stockProduct/(?<segment>.*), /stockProduct/${segment}
+        - id: cms-service-route
+          uri: http://localhost:8100
+          predicates:
+            - Path=/api/cmsProduct/**
+          filters:
+            - RewritePath=/api/cmsProduct/(?<segment>.*), /cmsProduct/${segment}

@@ -68,7 +68,7 @@ public class SearchController {
         translation.setProduct(cmsProduct);
         cmsProduct.addTranslation(translation);
         CmsProduct save = this.repository.save(cmsProduct);
-        return ResponseEntity.ok(save);
+        return ResponseEntity.ok(save.getTitle());
     }
 
     @SuppressWarnings("checkstyle:Indentation")
