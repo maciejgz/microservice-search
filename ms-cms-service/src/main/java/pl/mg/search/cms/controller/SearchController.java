@@ -30,7 +30,7 @@ public class SearchController {
     private final CmsProductRepository repository;
     private final CmsProductEventListener eventListener;
 
-    @GetMapping("/cmsProduct/filter")
+    @GetMapping("/api/v1/cmsProduct/filter")
     public ResponseEntity<?> filter(
             CmsProduct product,
             Pageable page,
@@ -51,7 +51,7 @@ public class SearchController {
     }
 
     @SuppressWarnings("checkstyle:Indentation")
-    @GetMapping("/cmsProduct/random")
+    @GetMapping("/api/v1/cmsProduct/random")
     @Transactional
     public ResponseEntity<?> random() {
         CmsProduct cmsProduct = new CmsProduct();
@@ -72,7 +72,7 @@ public class SearchController {
     }
 
     @SuppressWarnings("checkstyle:Indentation")
-    @GetMapping("/cmsProduct/event")
+    @GetMapping("/api/v1/cmsProduct/event")
     @Transactional
     public ResponseEntity<?> event() {
         this.eventListener.onApplicationEvent(new CmsProductCreatedEvent("testttttt"));
