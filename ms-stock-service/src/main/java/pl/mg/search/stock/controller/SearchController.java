@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.mg.search.stock.domain.StockProduct;
 import pl.mg.search.stock.domain.StockProductRepository;
 
-@RepositoryRestController
+@RepositoryRestController(value = {"/api/v1/stockProduct", "/api/v2/stockProducts"})
 @RequiredArgsConstructor
 public class SearchController {
 
@@ -23,7 +23,7 @@ public class SearchController {
     protected static final String STOCK_PRODUCT_ID_LABEL = "stockProductId";
     private final StockProductRepository repository;
 
-    @GetMapping("/stockProduct/filter")
+    @GetMapping("/filter")
     public ResponseEntity<?> filter(
             StockProduct product,
             Pageable page,

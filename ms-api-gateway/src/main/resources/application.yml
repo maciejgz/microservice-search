@@ -20,10 +20,10 @@ spring:
           predicates:
             - Path=/api/stockProduct/**
           filters:
-            - RewritePath=/api/stockProduct/(?<segment>.*), /stockProduct/${segment}
+            - RewritePath=/api/stockProduct/(?<segment>.*), /api/v1/stockProduct/${segment}
         - id: cms-service-route
           uri: http://localhost:8100
           predicates:
             - Path=/api/cmsProduct/**
           filters:
-            - RewritePath=/api/cmsProduct/(?<segment>.*), /cmsProduct/${segment}
+            - RewritePath=/api/cmsProduct/(?<segment>.*), /api/v1/cmsProduct/${segment}
