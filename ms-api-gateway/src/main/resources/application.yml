@@ -15,15 +15,31 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: stock-service-route
+        - id: stock-service-api-1-route
           uri: http://localhost:8091
           predicates:
             - Path=/api/stockProduct/**
+            - Weight=stock-api-group-1, 5
           filters:
             - RewritePath=/api/stockProduct/(?<segment>.*), /api/v1/stockProduct/${segment}
-        - id: cms-service-route
+        - id: stock-service-api-2-route
+          uri: http://localhost:8091
+          predicates:
+            - Path=/api/stockProduct/**
+            - Weight=stock-api-group-1, 5
+          filters:
+            - RewritePath=/api/stockProduct/(?<segment>.*), /api/v2/stockProduct/${segment}
+        - id: cms-service-api-1-route
           uri: http://localhost:8100
           predicates:
             - Path=/api/cmsProduct/**
+            - Weight=cms-api-group-1, 5
           filters:
             - RewritePath=/api/cmsProduct/(?<segment>.*), /api/v1/cmsProduct/${segment}
+        - id: cms-service-api-2-route
+          uri: http://localhost:8100
+          predicates:
+            - Path=/api/cmsProduct/**
+            - Weight=cms-api-group-1, 5
+          filters:
+            - RewritePath=/api/cmsProduct/(?<segment>.*), /api/v2/cmsProduct/${segment}

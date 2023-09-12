@@ -1,45 +1,38 @@
 package pl.mg.search.stock.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import pl.mg.search.stock.domain.StockProduct;
 import pl.mg.search.stock.domain.StockProductRepository;
 
-@RepositoryRestController(value = {"/api/v1/stockProduct", "/api/v2/stockProducts"})
-@RequiredArgsConstructor
+@RestController
+@RequestMapping(value = {"/api/v1/stockProduct", "/api/v2/stockProduct"})
+@Slf4j
+@AllArgsConstructor
 public class SearchController {
 
-    protected static final String CATEGORY_LABEL = "category";
-    protected static final String TITLE_LABEL = "title";
-    protected static final String STOCK_PRODUCT_ID_LABEL = "stockProductId";
     private final StockProductRepository repository;
 
     @GetMapping("/filter")
-    public ResponseEntity<?> filter(
-            StockProduct product,
+    public ResponseEntity<Page<StockProduct>> filter(
+            HttpServletRequest request,
             Pageable page,
-            PagedResourcesAssembler assembler,
-            PersistentEntityResourceAssembler entityAssembler,
             @RequestParam(name = "q") String query
     ) {
-        ExampleMatcher matcher = ExampleMatcher
-                .matchingAny()
-                .withIgnoreCase()
-                .withMatcher(CATEGORY_LABEL, ExampleMatcher.GenericPropertyMatchers.contains())
-                .withMatcher(TITLE_LABEL, ExampleMatcher.GenericPropertyMatchers.contains())
-                .withIgnorePaths(STOCK_PRODUCT_ID_LABEL);
-        Example<StockProduct> example = Example.of(product, matcher);
-        Page<?> result = this.repository.findAll(example, page);
-        return ResponseEntity.ok(assembler.toModel(result, entityAssembler));
+        log.debug("Request: {}", request.getRequestURI());
+        //TODO add search by title and description in translation
+        Page<StockProduct> products = repository.findByCategoryEqualsIgnoreCase(query, page);
+        return ResponseEntity.ok(products);
     }
+
 
 }

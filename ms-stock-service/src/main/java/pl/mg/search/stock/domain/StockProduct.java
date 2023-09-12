@@ -1,11 +1,7 @@
 package pl.mg.search.stock.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +26,9 @@ public class StockProduct {
 
     private String category;
 
+    @JsonIgnore
     @OneToMany(cascade = jakarta.persistence.CascadeType.ALL,
-               orphanRemoval = true
+            orphanRemoval = true
     )
     @JoinColumn(name = "stock_product_id")
     private Set<StockProductTranslation> translations;

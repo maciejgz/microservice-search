@@ -22,7 +22,7 @@ import java.util.Random;
 
 @RepositoryRestController
 @RequiredArgsConstructor
-public class SearchController {
+public class SpringDataSearchController {
 
     protected static final String DESCRIPTION_LABEL = "description";
     protected static final String TITLE_LABEL = "title";
@@ -30,7 +30,7 @@ public class SearchController {
     private final CmsProductRepository repository;
     private final CmsProductEventListener eventListener;
 
-    @GetMapping("/api/v1/cmsProduct/filter")
+    @GetMapping("/filter")
     public ResponseEntity<?> filter(
             CmsProduct product,
             Pageable page,
@@ -51,7 +51,7 @@ public class SearchController {
     }
 
     @SuppressWarnings("checkstyle:Indentation")
-    @GetMapping("/api/v1/cmsProduct/random")
+    @GetMapping("/random")
     @Transactional
     public ResponseEntity<?> random() {
         CmsProduct cmsProduct = new CmsProduct();
@@ -72,7 +72,7 @@ public class SearchController {
     }
 
     @SuppressWarnings("checkstyle:Indentation")
-    @GetMapping("/api/v1/cmsProduct/event")
+    @GetMapping("/event")
     @Transactional
     public ResponseEntity<?> event() {
         this.eventListener.onApplicationEvent(new CmsProductCreatedEvent("testttttt"));
