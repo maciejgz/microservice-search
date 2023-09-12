@@ -1,5 +1,7 @@
 package pl.mg.search.stock.domain;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,6 +13,8 @@ import java.util.Optional;
 public interface StockProductRepository extends PagingAndSortingRepository<StockProduct, Long>,
         CrudRepository<StockProduct, Long>, JpaRepository<StockProduct, Long> {
 
-    public Optional<StockProduct> findByStockProductId(Long stockProductId);
+    Optional<StockProduct> findByStockProductId(Long stockProductId);
+
+    Page<StockProduct> findByCategoryEqualsIgnoreCase(String category, Pageable pageable);
 
 }

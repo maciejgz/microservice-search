@@ -1,13 +1,13 @@
 package pl.mg.search.cms.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CmsProduct {
+public class CmsProduct implements Serializable {
 
     @Id
     private long id;
@@ -30,8 +30,9 @@ public class CmsProduct {
     @Column(name = "description", length = 5000)
     private String description;
 
+    @JsonIgnore
     @OneToMany(cascade = jakarta.persistence.CascadeType.ALL,
-               orphanRemoval = true
+            orphanRemoval = true
     )
     @JoinColumn(name = "cms_product_id")
     private Set<CmsProductTranslation> translations;
