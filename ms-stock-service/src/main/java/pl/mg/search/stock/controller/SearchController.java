@@ -34,5 +34,11 @@ public class SearchController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/bad-request")
+    @jakarta.transaction.Transactional
+    public ResponseEntity<?> badRequest() {
+        log.debug("Bad request");
+        return ResponseEntity.badRequest().body("bad gateway");
+    }
 
 }
