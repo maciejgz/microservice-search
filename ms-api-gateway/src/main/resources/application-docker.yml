@@ -22,21 +22,6 @@ spring:
             - Weight=stock-api-group-1, 5
           filters:
             - RewritePath=/api/stockProduct/(?<segment>.*), /api/v1/stockProduct/${segment}
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 100
-                redis-rate-limiter.burstCapacity: 100
-                redis-rate-limiter.requestedTokens: 1
-                key-resolver: "#{@productKeyResolver}"
-            - name: Retry
-              args:
-                retries: 3
-                statuses: BAD_REQUEST
-                backoff:
-                  firstBackoff: 10ms
-                  maxBackoff: 50ms
-                  factor: 3
-                  basedOnPreviousValue: false
             - name: CircuitBreaker
               args:
                 name: stock-api-group-1-cb
@@ -48,25 +33,10 @@ spring:
             - Weight=stock-api-group-1, 5
           filters:
             - RewritePath=/api/stockProduct/(?<segment>.*), /api/v2/stockProduct/${segment}
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 100
-                redis-rate-limiter.burstCapacity: 100
-                redis-rate-limiter.requestedTokens: 1
-                key-resolver: "#{@productKeyResolver}"
-            - name: Retry
-              args:
-                retries: 3
-                statuses: BAD_REQUEST
-                backoff:
-                  firstBackoff: 10ms
-                  maxBackoff: 50ms
-                  factor: 3
-                  basedOnPreviousValue: false
             - name: CircuitBreaker
               args:
-                  name: stock-api-group-1-cb
-                  fallbackUri: forward:/fallback/stock
+                name: stock-api-group-1-cb
+                fallbackUri: forward:/fallback/stock
         - id: cms-service-api-1-route
           uri: http://ms-cms-service:8100
           predicates:
