@@ -2,13 +2,18 @@ version: '3.8'
 services:
   redis:
     image: bitnami/redis:latest
-    restart: always
+    restart: no
     ports:
       - '6379:6379'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - redis:/data
+    networks:
+      - ms-network
 volumes:
   redis:
     driver: local
+
+networks:
+  ms-network:

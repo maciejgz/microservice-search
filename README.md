@@ -72,11 +72,27 @@ clean compile package spring-boot:build-image -Dmaven.test.skip=true -Pbuild-doc
 
 ## Deployment
 
+### Local deployment
+Run all the 3rd party services using Docker Compose in directory: `docker`. 
+```docker
+docker-compose -f db.yml -p microservice-search up -d
+docker-compose -f mongodb.yml -p microservice-search up -d
+docker-compose -f kafka.yml -p microservice-search up -d
+docker-compose -f redis.yml -p microservice-search up -d
+```
+All custom services should be run with `local` profile.
+```mvn
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+```
+
 ### Docker compose
 
 Before building the app you need to build the docker images: [Build docker images](#build-docker-images).
 <br />Then go to [docker](docker) directory and run scripts.
 <br />Do not run all the scripts on your own - use the following scripts to run all the containers.
+<br />All modules should be run with `docker` profile.
 <br />Windows:
 
 ```windows
@@ -89,7 +105,7 @@ Linux:
 ./start.sh
 ```
 
-## Kubernetes
+### Kubernetes
 
 
 

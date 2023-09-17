@@ -4,12 +4,13 @@ services:
   ms-cms-service:
     image: ms-cms-service:latest
     ports:
-      - "8100-8102:8081"
+      - "8100-8102:8100"
     deploy:
       replicas: 3
       mode: replicated
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ms-db:5432/cms
+      - SPRING_PROFILES_ACTIVE=docker
     networks:
       - ms-network
 
@@ -22,6 +23,7 @@ services:
       mode: replicated
     environment:
         - SPRING_DATASOURCE_URL=jdbc:postgresql://ms-db:5432/stock
+        - SPRING_PROFILES_ACTIVE=docker
     networks:
       - ms-network
 
@@ -33,8 +35,10 @@ services:
       replicas: 1
       mode: replicated
     environment:
-      - MS_STOCK_API=http://ms-stock-service:8082
+      - MS_STOCK_API=http://ms-stock-service:8100
       - MS_CMS_API=http://ms-cms-service:8081
+      - SPRING_PROFILES_ACTIVE=docker
+      - application-local.yml
     networks:
       - ms-network
 
