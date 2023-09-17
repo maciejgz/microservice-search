@@ -8,4 +8,15 @@ management:
   endpoints:
     web:
       exposure:
-        include: gateway
+        include: gateway, health, info, metrics, loggers, routes, env, beans, configprops, mappings
+
+
+logging:
+  level:
+    org:
+      springframework:
+        http:
+          server:
+            reactive: INFO
+        cloud:
+          gateway: INFO
