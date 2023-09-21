@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-admin
+  template:
+    metadata:
+      labels:
+        app: ms-admin
+    spec:
+      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: ms-admin
+          image: ms-admin:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+              value: "true"
+          imagePullPolicy: Never

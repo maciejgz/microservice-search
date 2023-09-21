@@ -5,12 +5,18 @@ Case study of the search problem in the microservice environment when data is st
 ## Modules
 
 ### ms-api-gateway
-API gateway - ports 8080-8082.
+API gateway - port 8080
 
 #### Technologies and libraries used
 - Spring cloud gateway - API gateway
 - Resilience4j - circuit breaker
 - Wiremock - API mocking for tests
+
+### ms-admin
+ADMIN App - port 8081
+
+#### Technologies and libraries used
+- Spring boot admin - monitoring of the services
 
 ### ms-stock-service 
 Stock service connected to PostgreSQL database - stock. <br />
@@ -106,6 +112,12 @@ Linux:
 ```
 
 ### Kubernetes
+K8S scripts shold be runned in the following order from the project root directory:
+- [k8s](k8s) - directory with global configuration - special role and privileges
+```docker
+kubectl apply -f k8s
+```
+- 
 
 
 
