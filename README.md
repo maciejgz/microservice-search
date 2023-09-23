@@ -113,11 +113,17 @@ Linux:
 
 ### Kubernetes
 K8S scripts shold be runned in the following order from the project root directory:
-- [k8s](k8s) - directory with global configuration - special role and privileges
+- [k8s](k8s) - directory with global configuration:
+  - special role and privileges
+  - ingress
 ```docker
 kubectl apply -f k8s
 ```
-- 
+
+- ms-admin - directory with configuration for the admin module [ms-admin](ms-admin/k8s):
+```docker
+kubectl apply -f ms-admin/k8s
+```
 
 
 
