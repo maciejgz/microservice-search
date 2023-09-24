@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-cms-service
+  labels:
+    app: ms-cms-service
+    spring-boot: "true"
+spec:
+  ports:
+    - port: 8100
+      protocol: TCP
+  selector:
+    app: ms-cms-service
+  type: ClusterIP

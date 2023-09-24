@@ -2,6 +2,17 @@
 
 Case study of the search problem in the microservice environment when data is stored in two different microservices.
 
+## Steps to be done on the infrastructure level
+- [x] Create Spring Boot microservice project with Spring Cloud Gateway
+- [x] Dockerize projects
+- [x] Run projects locally
+- [x] Run projects in Docker Compose
+- [ ] Run projects in Kubernetes
+- [ ] Enable scaling of the services with load balancing
+- [ ] Run Spring Boot Admin in local environment
+- [ ] Enable K8S ingress
+- [ ] Implement all the approach related functionalities and components in K8S/Docker/Local environment
+
 ## Modules
 
 ### ms-api-gateway
@@ -35,25 +46,22 @@ All the services should have configuration in YML format.
 
 ## Scenarios
 
-### Approach #1 - DONE
-selective replication
-
+### Approach #1 - Selective replication - DONE
 Data from the CMS service is replicated to the stock service using Kafka. The stock service is responsible for the
 search and sorting.
 <br />
 Scenario:
-
 - Products are created in the stock-service
 - Translations of products are created in the CMS service
 - When translation is created, the event is sent to the Kafka topic
 - The stock service is listening to the topic and when the event is received, the product is updated with the
   translation data
 
-### Approach #2
+### Approach #2 - Synchronous calls between services - TODO
 synchronous call to all services and joining results with caching of the query in Redis - TODO
 
-### Approach #3
-search between views in the database - approach simulating usage of different schemas in each microservice. - TODO
+### Approach #3 - Composite service layer - TODO
+External search service where all the data is replicated to the Elasticsearch instance - TODO
 
 ## Build
 
@@ -116,6 +124,7 @@ K8S scripts shold be runned in the following order from the project root directo
 - [k8s](k8s) - directory with global configuration:
   - special role and privileges
   - ingress
+All the custom modules shall be run with the `k8s` Spring profile.
 ```docker
 kubectl apply -f k8s
 ```
@@ -123,6 +132,16 @@ kubectl apply -f k8s
 - ms-admin - directory with configuration for the admin module [ms-admin](ms-admin/k8s):
 ```docker
 kubectl apply -f ms-admin/k8s
+```
+
+- ms-cms-service - directory with configuration for the cms module [ms-cms-service](ms-cms-service/k8s):
+```docker
+kubectl apply -f ms-cms-service/k8s
+```
+
+- ms-stock-service - directory with configuration for the stock module [ms-stock-service](ms-stock-service/k8s):
+```docker
+kubectl apply -f ms-stock-service/k8s
 ```
 
 

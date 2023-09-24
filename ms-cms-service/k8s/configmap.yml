@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ms-cms-service
+data:
+  application-k8s.properties: |-
+    spring.datasource.url=jdbc:postgresql://localhost:5433/cms
+    spring.profiles.active=k8s
