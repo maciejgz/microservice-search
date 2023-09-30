@@ -7,10 +7,13 @@ Case study of the search problem in the microservice environment when data is st
 - [x] Dockerize projects
 - [x] Run projects locally
 - [x] Run projects in Docker Compose
-- [ ] Run projects in Kubernetes
-- [ ] Enable scaling of the services with load balancing
+- [ ] Run all projects in Kubernetes
+- [ ] Run all the 3rd party services in K8S
+- [ ] Add distributed tracing with Sleuth and Zipkin
+- [ ] Enable scaling of the services with load balancing over API Gateway
 - [ ] Run Spring Boot Admin in local environment
-- [ ] Enable K8S ingress
+- [ ] Enable K8S ingress to make app available over the internet
+- [ ] Deploy all the services to the cloud
 - [ ] Implement all the approach related functionalities and components in K8S/Docker/Local environment
 
 ## Modules
@@ -30,12 +33,12 @@ ADMIN App - port 8081
 - Spring boot admin - monitoring of the services
 
 ### ms-stock-service 
-Stock service connected to PostgreSQL database - stock. <br />
-Works on port range: 8091-8093
+Stock service connected to PostgreSQL database - `stock`. <br />
+Works on ports: 8091-8093
 
 ### ms-cms-service 
-Stock service connected to PostgreSQL database - cms. <br />
-Works on port range: 8100-8102
+Stock service connected to PostgreSQL database - `cms`. <br />
+Works on ports: 8100-8102
 
 The main goal of this project is to find the best solution for the search functionality in the distributed system when
 data to be searched or sorted is located in different services.
@@ -129,17 +132,17 @@ All the custom modules shall be run with the `k8s` Spring profile.
 kubectl apply -f k8s
 ```
 
-- ms-admin - directory with configuration for the admin module [ms-admin](ms-admin/k8s):
+- [ms-admin](ms-admin) - directory with configuration for the admin module [ms-admin](ms-admin/k8s):
 ```docker
 kubectl apply -f ms-admin/k8s
 ```
 
-- ms-cms-service - directory with configuration for the cms module [ms-cms-service](ms-cms-service/k8s):
+- [ms-cms-service](ms-cms-service) - directory with configuration for the cms module [ms-cms-service](ms-cms-service/k8s):
 ```docker
 kubectl apply -f ms-cms-service/k8s
 ```
 
-- ms-stock-service - directory with configuration for the stock module [ms-stock-service](ms-stock-service/k8s):
+- [ms-stock-service](ms-stock-service) - directory with configuration for the stock module [ms-stock-service](ms-stock-service/k8s):
 ```docker
 kubectl apply -f ms-stock-service/k8s
 ```
