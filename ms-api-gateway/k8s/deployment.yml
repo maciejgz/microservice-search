@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-cms-service
+  name: ms-api-gateway
   labels:
-    app: ms-cms-service
+    app: ms-api-gateway
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: ms-cms-service
+      app: ms-api-gateway
   template:
     metadata:
       labels:
-        app: ms-cms-service
+        app: ms-api-gateway
     spec:
       serviceAccountName: spring-cloud-kubernetes
       containers:
-        - name: ms-cms-service
-          image: ms-cms-service:latest
+        - name: ms-api-gateway
+          image: ms-api-gateway:latest
           ports:
-            - containerPort: 8100
+            - containerPort: 8080
           imagePullPolicy: Never
           env:
             - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
@@ -28,3 +28,8 @@ spec:
               value: "true"
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
+            - name: DATA_REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-api-gateway
+                  key: DATA_REDIS_HOST

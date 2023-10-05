@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+## API Gateway routes
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: stock-service-api-1-route
+          uri: http://ms-stock-service:8091
+          predicates:
+            - Path=/api/stockProduct/**
+            - Weight=stock-api-group-1, 5
+          filters:
+            - RewritePath=/api/stockProduct/(?<segment>.*), /api/v1/stockProduct/${segment}
+            - name: CircuitBreaker
+              args:
+                name: stock-api-group-1-cb
+                fallbackUri: forward:/fallback/stock
+        - id: stock-service-api-2-route
+          uri: http://ms-stock-service:8091
+          predicates:
+            - Path=/api/stockProduct/**
+            - Weight=stock-api-group-1, 5
+          filters:
+            - RewritePath=/api/stockProduct/(?<segment>.*), /api/v2/stockProduct/${segment}
+            - name: CircuitBreaker
+              args:
+                name: stock-api-group-1-cb
+                fallbackUri: forward:/fallback/stock
+        - id: cms-service-api-1-route
+          uri: http://ms-cms-service:8100
+          predicates:
+            - Path=/api/cmsProduct/**
+            - Weight=cms-api-group-1, 5
+          filters:
+            - RewritePath=/api/cmsProduct/(?<segment>.*), /api/v1/cmsProduct/${segment}
+            - name: CircuitBreaker
+              args:
+                name: cms-api-group-1-cb
+                fallbackUri: forward:/fallback/cms
+        - id: cms-service-api-2-route
+          uri: http://ms-cms-service:8100
+          predicates:
+            - Path=/api/cmsProduct/**
+            - Weight=cms-api-group-1, 5
+          filters:
+            - RewritePath=/api/cmsProduct/(?<segment>.*), /api/v2/cmsProduct/${segment}
+            - name: CircuitBreaker
+              args:
+                name: cms-api-group-1-cb
+                fallbackUri: forward:/fallback/cms
+  data:
+    redis:
+      host: ${DATA_REDIS_HOST}

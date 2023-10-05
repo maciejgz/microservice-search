@@ -7,10 +7,10 @@ Case study of the search problem in the microservice environment when data is st
 - [x] Dockerize projects
 - [x] Run projects locally
 - [x] Run projects in Docker Compose
-- [ ] Run all projects in Kubernetes
+- [x] Run all projects in Kubernetes
 - [ ] Run all the 3rd party services in K8S
 - [ ] Add distributed tracing with Sleuth and Zipkin
-- [ ] Enable scaling of the services with load balancing over API Gateway
+- [x] Enable scaling of the services with load balancing over API Gateway
 - [ ] Run Spring Boot Admin in local environment
 - [ ] Enable K8S ingress to make app available over the internet
 - [ ] Deploy all the services to the cloud
@@ -123,7 +123,7 @@ Linux:
 ```
 
 ### Kubernetes
-K8S scripts shold be runned in the following order from the project root directory:
+K8S scripts should be run in the following order from the project root directory:
 - [k8s](k8s) - directory with global configuration:
   - special role and privileges
   - ingress
@@ -135,6 +135,11 @@ kubectl apply -f k8s
 - [ms-admin](ms-admin) - directory with configuration for the admin module [ms-admin](ms-admin/k8s):
 ```docker
 kubectl apply -f ms-admin/k8s
+```
+
+- [ms-api-gateway](ms-api-gateway) - directory with configuration for the admin module [ms-api-gateway](ms-api-gateway/k8s):
+```docker
+kubectl apply -f ms-api-gateway/k8s
 ```
 
 - [ms-cms-service](ms-cms-service) - directory with configuration for the cms module [ms-cms-service](ms-cms-service/k8s):
