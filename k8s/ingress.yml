@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ms-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  defaultBackend:
+    service:
+      name: ms-admin
+      port:
+        number: 8081
+  rules:
+    - host: microservices.info
+      http:
+        paths:
+          - path: /applications
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ms-admin
+                port:
+                  number: 8081

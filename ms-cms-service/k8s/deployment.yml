@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-cms-service
+  labels:
+    app: ms-cms-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-cms-service
+  template:
+    metadata:
+      labels:
+        app: ms-cms-service
+    spec:
+      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: ms-cms-service
+          image: ms-cms-service:latest
+          ports:
+            - containerPort: 8100
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+              value: "true"
+            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+              value: "true"
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s

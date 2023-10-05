@@ -22,5 +22,6 @@
         <module>ms-cms-service</module>
         <module>ms-commons</module>
         <module>ms-api-gateway</module>
+        <module>ms-admin</module>
     </modules>
 </project>

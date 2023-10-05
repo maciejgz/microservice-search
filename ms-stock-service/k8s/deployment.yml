@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-stock-service
+  labels:
+    app: ms-stock-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ms-stock-service
+  template:
+    metadata:
+      labels:
+        app: ms-stock-service
+    spec:
+      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: ms-stock-service
+          image: ms-stock-service:latest
+          ports:
+            - containerPort: 8091
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+              value: "true"
+            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+              value: "true"
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s

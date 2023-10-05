@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-stock-service
+  labels:
+    app: ms-stock-service
+    spring-boot: "true"
+spec:
+  ports:
+    - port: 8091
+      protocol: TCP
+  selector:
+    app: ms-stock-service
+  type: ClusterIP

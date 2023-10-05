@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-api-gateway
+  labels:
+    app: ms-api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-api-gateway
+  template:
+    metadata:
+      labels:
+        app: ms-api-gateway
+    spec:
+      serviceAccountName: spring-cloud-kubernetes
+      containers:
+        - name: ms-api-gateway
+          image: ms-api-gateway:latest
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Never
+          env:
+            - name: SPRING_CLOUD_BOOTSTRAP_ENABLED
+              value: "true"
+            - name: SPRING_CLOUD_KUBERNETES_SECRETS_ENABLEAPI
+              value: "true"
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+            - name: DATA_REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-api-gateway
+                  key: DATA_REDIS_HOST
