@@ -11,4 +11,4 @@ spec:
       protocol: TCP
   selector:
     app: ms-stock-service
-  type: LoadBalancer
+  type: ClusterIP
