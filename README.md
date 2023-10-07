@@ -190,7 +190,10 @@ kubectl apply -f ms-stock-service/k8s
 
 Users are stored in Keycloak. <br />
 Predefined users: </br>
-Admin:
+Keycloak admin users:
+- admin/admin
+
+</br>Admin role users:
 
 - admin_user_1/admin_user_1 role `admin`
 - admin_user_2/admin_user_2 role `admin`

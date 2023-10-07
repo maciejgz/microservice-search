@@ -14,7 +14,7 @@ public class ProductKeyResolver implements KeyResolver {
 
     @Override
     public Mono<String> resolve(ServerWebExchange exchange) {
-        log.info("Request from {}", Objects.requireNonNull(exchange.getRequest().getLocalAddress().getHostName()));
+        log.debug("Request from {}", Objects.requireNonNull(exchange.getRequest().getLocalAddress().getHostName()));
         return Mono.just(Objects.requireNonNull(exchange.getRequest().getLocalAddress().getHostName()));
     }
 }

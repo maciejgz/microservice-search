@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +43,16 @@ public class RestSearchController {
             HttpServletRequest request,
             Pageable page,
             @RequestParam(name = "q") String query
+
     ) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        log.debug("user authenticated as: {}", username);
+        org.springframework.security.oauth2.jwt.Jwt jwt = (Jwt) authentication.getPrincipal();
+
+        log.debug(jwt.getSubject());
+
         log.debug("Request: {}", request.getRequestURI());
         Page<CmsProduct> products = repository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query, page);
         return ResponseEntity.ok(products);
