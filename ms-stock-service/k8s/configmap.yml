@@ -3,6 +3,7 @@ apiVersion: v1
 metadata:
   name: ms-stock-service
 data:
+  HOST_IP: "192.168.0.129"
   application-k8s.properties: |-
     spring.datasource.url=jdbc:postgresql://localhost:5433/stock
     spring.profiles.active=k8s

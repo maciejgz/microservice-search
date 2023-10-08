@@ -147,7 +147,13 @@ Linux:
 ### Kubernetes
 
 K8S scripts should be run in the following order from the project root directory:
+</br> Run all scripts from the root directory:
 
+```docker
+.\k8s\start.bat
+```
+
+Or run each scripts separately:
 - [k8s](k8s) - directory with global configuration:
     - special role and privileges
     - ingress
