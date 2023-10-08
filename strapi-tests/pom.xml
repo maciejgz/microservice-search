@@ -14,7 +14,7 @@
     <name>search-gateway</name>
     <description>search-gateway</description>
     <properties>
-        <spring-boot.build-image.imageName>${artifactId}:${project.version}</spring-boot.build-image.imageName>
+        <spring-boot.build-image.imageName>${project.artifactId}:${project.version}</spring-boot.build-image.imageName>
     </properties>
     <dependencies>
         <dependency>

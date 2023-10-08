@@ -14,7 +14,7 @@
     <name>cms-service</name>
     <description>cms-service</description>
     <properties>
-        <spring-boot.build-image.imageName>${artifactId}:${project.version}</spring-boot.build-image.imageName>
+        <spring-boot.build-image.imageName>${project.artifactId}:${project.version}</spring-boot.build-image.imageName>
     </properties>
     <dependencies>
         <dependency>
@@ -100,9 +100,9 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <name>${artifactId}</name>
+                        <name>${project.artifactId}</name>
                         <tags>
-                            <tag>${artifactId}:${version}</tag>
+                            <tag>${project.artifactId}:${project.version}</tag>
                         </tags>
                     </image>
                 </configuration>

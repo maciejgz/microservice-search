@@ -113,9 +113,9 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <name>${artifactId}</name>
+                        <name>${project.artifactId}</name>
                         <tags>
-                            <tag>${artifactId}:${version}</tag>
+                            <tag>${project.artifactId}:${project.version}</tag>
                         </tags>
                     </image>
                 </configuration>
