@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  keycloak:
+    container_name: ms-keycloak
+    image: quay.io/keycloak/keycloak:22.0.3
+    command: ['start-dev', '--db postgres']
+    environment:
+      KC_DB_URL: jdbc:postgresql://ms-db:5432/keycloak
+      KC_DB_PASSWORD: postgres
+      KC_DB_USERNAME: postgres
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      HOSTNAME: localhost
+    ports:
+      - "8082:8080"
+      - "8787:8787" # debug port
+    networks:
+      - ms-network
+
+networks:
+  ms-network:

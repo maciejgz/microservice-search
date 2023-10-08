@@ -12,6 +12,11 @@ management:
 
 ## API Gateway routes
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://${DATA_REDIS_HOST}:8082/realms/ms/protocol/openid-connect/certs
   cloud:
     gateway:
       routes:

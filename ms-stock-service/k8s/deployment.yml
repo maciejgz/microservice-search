@@ -28,3 +28,8 @@ spec:
               value: "true"
             - name: SPRING_PROFILES_ACTIVE
               value: k8s
+            - name: HOST_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: ms-stock-service
+                  key: HOST_IP
