@@ -1,6 +1,13 @@
 # Microservice environment search case study
 
 Case study of the search problem in the microservice environment when data is stored in two different microservices.
+</br>
+The main goal of this project is to find the best solution for the search functionality in the distributed system when
+data to be searched or sorted is located in different services.
+
+All the services should be run in the docker environment with K8S.
+<br />
+All the services should have configuration in YML format.
 
 ## Steps to be done on the infrastructure level
 
@@ -51,13 +58,6 @@ Works on ports: 8100-8102
 
 Authentication server - port 8082.
 Run in Docker Compose.
-
-The main goal of this project is to find the best solution for the search functionality in the distributed system when
-data to be searched or sorted is located in different services.
-
-All the services should be run in the docker environment with K8S.
-<br />
-All the services should have configuration in YML format.
 
 ## Scenarios
 
@@ -154,6 +154,7 @@ K8S scripts should be run in the following order from the project root directory
 ```
 
 Or run each scripts separately:
+
 - [k8s](k8s) - directory with global configuration:
     - special role and privileges
     - ingress
@@ -197,6 +198,7 @@ kubectl apply -f ms-stock-service/k8s
 Users are stored in Keycloak. <br />
 Predefined users: </br>
 Keycloak admin users:
+
 - admin/admin
 
 </br>Admin role users:
