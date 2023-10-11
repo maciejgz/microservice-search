@@ -35,6 +35,7 @@ API gateway - port 8080
 - Spring cloud gateway - API gateway
 - Resilience4j - circuit breaker
 - Wiremock - API mocking for tests
+- Spring Security - OIDC authentication scheme
 
 ### ms-admin
 
