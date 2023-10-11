@@ -56,7 +56,7 @@ Works on ports: 8100-8102
 
 ### ms-keycloak
 
-Authentication server - port 8082.
+Authentication server - port 8082. OIDC authentication scheme is used to authenticate users.
 Run in Docker Compose.
 
 ## Scenarios
