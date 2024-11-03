@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-redis
+  labels:
+    app: ms-redis
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          app: ms-redis
+    template:
+        metadata:
+          labels:
+            app: ms-redis
+        spec:
+          containers:
+            - name: ms-redis
+              image: bitnami/redis:latest
+              ports:
+                  - containerPort: 6379
+              env:
+                  - name: ALLOW_EMPTY_PASSWORD
+                    value: "yes"
+              volumeMounts:
+                - name: redis
+                  mountPath: /data
+          volumes:
+            - name: redis
+              emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-redis-service
+  labels:
+    app: ms-redis
+spec:
+    selector:
+        app: ms-redis
+    ports:
+        - name: redis
+          protocol: TCP
+          port: 6379
+          targetPort: 6379
+    type: LoadBalancer

@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-kafka
+  labels:
+    app: ms-kafka
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          app: ms-kafka
+    template:
+        metadata:
+          labels:
+            app: ms-kafka
+        spec:
+          containers:
+            - name: ms-kafka
+              image: wurstmeister/kafka
+              ports:
+                  - containerPort: 9092
+              env:
+                  - name: KAFKA_ADVERTISED_HOST_NAME
+                    value: 127.0.0.1
+                  - name: KAFKA_ZOOKEEPER_CONNECT
+                    value: ms-zookeeper-service:2181
+                  - name: KAFKA_AUTO_CREATE_TOPICS_ENABLE
+                    value: 'true'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-kafka-service
+  labels:
+    app: ms-kafka
+spec:
+    selector:
+        app: ms-kafka
+    ports:
+        - protocol: TCP
+          port: 9092
+          targetPort: 9092
+    type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-zookeeper
+  labels:
+    app: ms-zookeeper
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          app: ms-zookeeper
+    template:
+        metadata:
+          labels:
+            app: ms-zookeeper
+        spec:
+          containers:
+            - name: ms-zookeeper
+              image: wurstmeister/zookeeper
+              ports:
+                  - containerPort: 2181
+              env:
+                  - name: ZOOKEEPER_CLIENT_PORT
+                    value: "2181"
+                  - name: ZOOKEEPER_TICK_TIME
+                    value: "2000"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-zookeeper-service
+  labels:
+    app: ms-zookeeper
+spec:
+    selector:
+        app: ms-zookeeper
+    ports:
+        - protocol: TCP
+          port: 2181
+          targetPort: 2181
+    type: LoadBalancer
+
