@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class FallbackController {
 
-
     //get method for fallback for stock service
     public String stockServiceFallback() {
         log.info("Fallback for stock service");

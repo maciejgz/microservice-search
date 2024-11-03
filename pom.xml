@@ -14,14 +14,26 @@
     <packaging>pom</packaging>
     <name>microservice-search</name>
     <properties>
-        <java.version>20</java.version>
+        <java.version>23</java.version>
     </properties>
     <modules>
-        <module>strapi-tests</module>
         <module>ms-stock-service</module>
         <module>ms-cms-service</module>
         <module>ms-commons</module>
         <module>ms-api-gateway</module>
         <module>ms-admin</module>
     </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

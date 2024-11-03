@@ -1,7 +1,7 @@
 # Microservice environment search case study
 
 Case study of the search problem in the microservice environment when data is stored in two different microservices.
-</br>
+<br />
 The main goal of this project is to find the best solution for the search functionality in the distributed system when
 data to be searched or sorted is located in different services.
 
@@ -17,11 +17,8 @@ All the services should have configuration in YML format.
 - [x] Run projects in Docker Compose
 - [x] Run all projects in Kubernetes
 - [x] Enable scaling of the services with load balancing over API Gateway
-- [ ] Run all the 3rd party services in K8S
 - [ ] Add distributed tracing with Sleuth and Zipkin
-- [ ] Run Spring Boot Admin in local environment
 - [ ] Enable K8S ingress to make app available over the internet
-- [ ] Deploy all the services to the cloud
 - [ ] Implement all the approach related functionalities and components in K8S/Docker/Local environment
 
 ## Modules
@@ -107,6 +104,8 @@ clean compile package spring-boot:build-image -Dmaven.test.skip=true -Pbuild-doc
 
 ## Deployment
 
+There are several ways to deploy the application - local, docker, k8s. For each deployment, there are separate profiles in the Spring Boot apps.
+
 ### Local deployment
 
 Run all the 3rd party services using Docker Compose in directory: `docker`.
@@ -145,16 +144,22 @@ Linux:
 ./start.sh
 ```
 
-### Kubernetes
+### Kubernetes - To be finished
 
-K8S scripts should be run in the following order from the project root directory:
-</br> Run all scripts from the root directory:
+Before building the app you need to build the docker images: [Build docker images](#build-docker-images).
+At first, run all the 3rd party services using docker compose - it will be replaced with K8S scripts in the future.
+
+```docker
+.\docker\start_3rd_party_components.bat
+```
+
+<br /> Run all scripts from the root directory:
 
 ```docker
 .\k8s\start.bat
 ```
 
-Or run each scripts separately:
+Or run each script separately:
 
 - [k8s](k8s) - directory with global configuration:
     - special role and privileges
@@ -197,20 +202,17 @@ kubectl apply -f ms-stock-service/k8s
 ### Users
 
 Users are stored in Keycloak. <br />
-Predefined users: </br>
+Predefined users: <br />
 Keycloak admin users:
-
 - admin/admin
 
-</br>Admin role users:
-
+Admin role users:
 - admin_user_1/admin_user_1 role `admin`
 - admin_user_2/admin_user_2 role `admin`
 
-</br>Normal user:
-
-- user_1/user_1 - role `client`
-- user_2/user_2 - role `client`
+Normal user:
+- user1/user1 - role `client`
+- user2/user2 - role `client`
 
 
 
